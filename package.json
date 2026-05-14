@@ -39,11 +39,12 @@
     "@angular/cli": "^21.2.3",
     "@angular/compiler-cli": "^21.1.0",
     "@angular/material": "^21.1.0",
-    "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindcss/postcss": "^4.3.0",
+    "daisyui": "^5.5.19",
     "jsdom": "^27.1.0",
-    "postcss": "^8.5.3",
+    "postcss": "^8.5.14",
     "prettier": "3.8.0",
-    "tailwindcss": "^4.1.12",
+    "tailwindcss": "^4.3.0",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }

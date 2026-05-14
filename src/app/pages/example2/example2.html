@@ -2,4 +2,62 @@
   <div class="absolute inset-0 z-0" routerLink="/home"></div>
 
   <app-header />
+
+  <div class="px-6 pt-26 pb-6">
+    <div class="card p-4 border rounded-box border-primary bg-primary/5 shadow-xl relative z-10 max-w-xl mx-auto">
+      <div class="card-body">
+        <h3 class="card-title mb-2 text-primary text-lg font-bold">Signal Forms (v21)</h3>
+        <p class="mb-2 text-xs">Model-driven, type-safe, default signals.</p>
+
+        <form (submit)="onSubmit($event)" class="mt-4">
+          <div class="form-control max-w-xs">
+            <label class="label"><span class="label-text">Username</span></label>
+            <input type="text" [formField]="signalForm.username" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !signalForm.username().invalid(),
+    'input-error': focused() && signalForm.username().invalid()
+  }" (focus)="focused.set(true)" />
+
+            <div class="label-box">
+              @if (focused() && signalForm.username().invalid()){
+              @for (error of signalForm.username().errors(); track error.kind) {
+              <div class="label label-start" animate.leave="label-leave"><span class="label-text-alt text-error">{{
+                  error.message
+                  }}</span></div>
+              }}
+            </div>
+          </div>
+
+          <div class="form-control max-w-xs mt-2">
+            <label class="label"><span class="label-text">Email</span></label>
+            <input type="text" [formField]="signalForm.email" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !signalForm.email().invalid(),
+    'input-error': focused() && signalForm.email().invalid()
+  }" (focus)="focused.set(true)" />
+
+            <div class="label-box">
+              @if (focused() && signalForm.email().invalid()){
+              @for (error of signalForm.email().errors(); track error.kind) {
+              <div class="label label-start" animate.leave="label-leave"><span class="label-text-alt text-error">{{
+                  error.message
+                  }}</span></div>
+              }}
+            </div>
+          </div>
+
+          <div class="flex gap-2 mt-5">
+            <button type="submit" [disabled]="signalForm().invalid() || signalForm().pending()" class="btn btn-primary">
+              Submit (Signal)
+            </button>
+          </div>
+        </form>
+
+
+        @if (lastSubmission()) {
+        <div class="alert alert-success mt-4 text-sm shadow">
+          <span>Last successful submission: {{ lastSubmission() | json }}</span>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
 </div>
