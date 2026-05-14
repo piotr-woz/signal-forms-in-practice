@@ -29,8 +29,7 @@ export default class Home {
     {
       id: 1,
       title: 'Basic Signal Form 1',
-      description:
-        'Basic implementation with Angular Material, featuring built-in and custom validation.',
+      description: 'Built-in and Custom Validation with Angular Material: A Complete Overview',
       origin: 'https://www.angularspace.com/signal-forms/',
     },
     {

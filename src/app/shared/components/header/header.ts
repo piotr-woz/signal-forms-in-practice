@@ -9,7 +9,7 @@ import { DataService } from '../../services/data.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
-  private _dataService = inject(DataService);
+  private readonly _dataService = inject(DataService);
 
   protected readonly pageTitle = this._dataService.pageTitle;
   protected readonly originLink = this._dataService.originLink;
