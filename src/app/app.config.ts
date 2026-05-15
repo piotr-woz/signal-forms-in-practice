@@ -4,7 +4,12 @@ import {
   isDevMode,
   provideCheckNoChangesConfig,
 } from '@angular/core';
-import { provideRouter, withViewTransitions } from '@angular/router';
+import {
+  provideRouter,
+  withViewTransitions,
+  withPreloading,
+  PreloadAllModules,
+} from '@angular/router';
 import { provideSignalFormsConfig } from '@angular/forms/signals';
 
 import { routes } from './app.routes';
@@ -12,7 +17,7 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes, withViewTransitions()),
+    provideRouter(routes, withPreloading(PreloadAllModules), withViewTransitions()),
     ...(isDevMode()
       ? [
           // enable extra checks in dev mode only
