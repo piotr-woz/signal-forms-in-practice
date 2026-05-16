@@ -43,12 +43,16 @@ export default class Example1 {
   protected readonly userProfile = signal<UserProfile>(userProfileInitialState);
 
   protected readonly userForm = form(this.userProfile, (path) => {
-    /* FirstName and lastName validation */
+    /* FirstName and lastName validation with schema */
     (apply(path.firstName, userProfileSchema),
       apply(path.lastName, userProfileSchema),
-      /* Phone validation */
+      /* --------------------------------------------------------------------------- */
+
+      /* Phone validation with custom validator function */
       // phone number must contain only numbers
       numericOnly(path.phone, 'phone', { message: 'The phone number must contain only numbers.' }),
+      /* --------------------------------------------------------------------------- */
+
       /* Email validation */
       // email is required only if email marketing is checked
       required(path.email, {
@@ -56,9 +60,11 @@ export default class Example1 {
         message: 'This is a required field.',
       }),
       email(path.email, { message: 'The email address is not valid.' }),
+      /* --------------------------------------------------------------------------- */
+
       /* Password validation */
       // password must contain at least one number, one special character and one uppercase letter (custom validator)
-      validate(path.password, ({ value }) => {
+      validate(path.password, ({ value }): { message: string; kind: string } | null => {
         const password = value();
         if (!password) return null;
 
@@ -90,11 +96,14 @@ export default class Example1 {
           `Password should have at least 8 characters but has only ${password.value().length}`,
       }),
       // confirm password must match password (custom validator)
-      validate(path.confirmPassword, ({ value, valueOf }) => {
-        return value() !== valueOf(path.password)
-          ? { message: 'Passwords do not match.', kind: 'confirmPassword' }
-          : null;
-      }));
+      validate(
+        path.confirmPassword,
+        ({ value, valueOf }): { message: string; kind: string } | null => {
+          return value() === valueOf(path.password)
+            ? null
+            : { message: 'Passwords do not match.', kind: 'confirmPassword' };
+        },
+      ));
   });
 
   constructor() {
@@ -103,6 +112,7 @@ export default class Example1 {
     //   console.log(this.userForm.firstName().value());
     // });
   }
+
   protected readonly fullName = computed(
     () => `${this.userProfile().firstName} ${this.userProfile().lastName}`,
   );
@@ -110,8 +120,8 @@ export default class Example1 {
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
     console.log(this.userForm().value());
+    // async logic that returns either undefined (success) or array of errors
     await submit(this.userForm, async (form) => {
-      // async logic that returns ise of either undefined (success) or array of errors
       try {
         // await this.userService.saveForm(form().value()); // call to API to save our form data (example)
         form().reset(userProfileInitialState);
@@ -120,8 +130,8 @@ export default class Example1 {
         // simulate server error for first name field
         return [
           {
-            kind: 'server',
             message: (error as Error).message,
+            kind: 'server',
             fieldTree: form.firstName,
           },
         ];
@@ -173,7 +183,15 @@ In custom validation, ctx object gives access to:
 We can access all individual fields from our form:
   this.userForm.firstName().value.set("Peter");
 
-We can access the state of individual fields, such as valid / pristine / touched / disabled / errors, and more:
+We can access the state of individual fields, such as:
+touched
+dirty
+valid / invalid / pending
+errors
+disabled
+hidden
+readonly
+
   this.userForm.phone().dirty();
 
 And we can also acccess that information on the entire form

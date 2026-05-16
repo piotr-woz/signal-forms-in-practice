@@ -19,6 +19,7 @@ export const userProfileInitialState: UserProfile = {
   password: '',
   confirmPassword: '',
 };
+/* --------------------------------------------------------------------------- */
 
 // reusable schema for first name and last name fields
 export const userProfileSchema: Schema<string> = schema((path) => {
@@ -35,7 +36,7 @@ export function numericOnly(
   kind: string,
   options?: { message?: string },
 ): void {
-  validate(path, ({ value }) => {
+  validate(path, ({ value }): { message: string; kind: string } | null => {
     const val = value();
     if (!val) return null;
 
@@ -43,8 +44,8 @@ export function numericOnly(
     return isValid
       ? null
       : {
-          kind: kind,
           message: options?.message || 'This input must contain only numbers.',
+          kind: kind,
         };
   });
 }
