@@ -1,6 +1,2 @@
 @import 'tailwindcss';
 @plugin "daisyui";
-
-.is-invalid {
-  color: #ba1a1a !important;
-}

@@ -1,7 +1,14 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
-import { form, FormField, required, email, submit } from '@angular/forms/signals';
+import {
+  form,
+  FormField,
+  required,
+  email,
+  submit,
+  provideSignalFormsConfig,
+} from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';
 
 interface LoginData {
@@ -32,7 +39,18 @@ interface LoginData {
       transform: translateY(-100%);
       transition: all 0.25s ease-in-out;
     }
+
+    .is-invalid {
+      color: #ff5861 !important;
+    }
   `,
+  providers: [
+    provideSignalFormsConfig({
+      classes: {
+        'is-invalid': (field) => field.state().invalid() && field.state().touched(),
+      },
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example2 {

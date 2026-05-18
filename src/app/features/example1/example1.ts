@@ -10,6 +10,7 @@ import {
   submit,
   validateTree,
   hidden,
+  provideSignalFormsConfig,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -39,6 +40,18 @@ import { numericOnly } from './user-profile';
     FormError,
   ],
   templateUrl: './example1.html',
+  styles: `
+    .is-invalid {
+      color: #ba1a1a !important;
+    }
+  `,
+  providers: [
+    provideSignalFormsConfig({
+      classes: {
+        'is-invalid': (field) => field.state().invalid() && field.state().touched(),
+      },
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {

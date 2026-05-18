@@ -18,19 +18,14 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withPreloading(PreloadAllModules), withViewTransitions()),
+    // enable extra checks in dev mode only
     ...(isDevMode()
       ? [
-          // enable extra checks in dev mode only
           provideCheckNoChangesConfig({
             exhaustive: true,
             interval: 3_000,
           }),
         ]
       : []),
-    provideSignalFormsConfig({
-      classes: {
-        'is-invalid': (field) => field.state().invalid() && field.state().touched(),
-      },
-    }),
   ],
 };
