@@ -12,11 +12,11 @@ import {
   hidden,
   provideSignalFormsConfig,
 } from '@angular/forms/signals';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import { FormError } from './form-error/form-error';
@@ -29,11 +29,11 @@ import { numericOnly } from './user-profile';
 @Component({
   selector: 'app-example1',
   imports: [
+    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule,
-    MatButton,
     MatCheckbox,
+    MatButton,
     FormField,
     RouterLink,
     Header,

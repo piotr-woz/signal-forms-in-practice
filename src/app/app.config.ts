@@ -10,7 +10,6 @@ import {
   withPreloading,
   PreloadAllModules,
 } from '@angular/router';
-import { provideSignalFormsConfig } from '@angular/forms/signals';
 
 import { routes } from './app.routes';
 

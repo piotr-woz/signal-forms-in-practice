@@ -22,7 +22,7 @@ export const userProfileInitialState: UserProfile = {
 /* --------------------------------------------------------------------------- */
 
 // reusable schema for first name and last name fields
-export const userProfileSchema: Schema<string> = schema((path) => {
+export const userProfileSchema: Schema<string> = schema((path: SchemaPath<string>) => {
   required(path, { message: 'This is a required field.' });
   minLength(path, 3, {
     message: (input) =>
@@ -34,7 +34,7 @@ export const userProfileSchema: Schema<string> = schema((path) => {
 export function numericOnly(
   path: SchemaPath<string>,
   kind: string,
-  options?: { message?: string },
+  options?: { message: string },
 ): void {
   validate(path, ({ value }): { message: string; kind: string } | null => {
     const val = value();
