@@ -12,40 +12,32 @@
         <form (submit)="onSubmit($event)" class="mt-4">
           <div class="form-control max-w-xs">
             <label class="label"><span class="label-text">Username</span></label>
-            <input type="text" [formField]="signalForm.username" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !signalForm.username().invalid(),
-    'input-error': focused() && signalForm.username().invalid()
+            <input type="text" [formField]="userLoginForm.username" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !userLoginForm.username().invalid(),
+    'input-error': focused() && userLoginForm.username().invalid()
   }" (focus)="focused.set(true)" />
 
-            <div class="label-box">
-              @if (focused() && signalForm.username().invalid()){
-              @for (error of signalForm.username().errors(); track error.kind) {
-              <div class="label label-start" animate.leave="label-leave"><span class="label-text-alt text-error">{{
-                  error.message
-                  }}</span></div>
-              }}
+            <div class="error-label-box">
+              <ng-container
+                *ngTemplateOutlet="formError; context: { $implicit: userLoginForm.username }"></ng-container>
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">Email</span></label>
-            <input type="text" [formField]="signalForm.email" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !signalForm.email().invalid(),
-    'input-error': focused() && signalForm.email().invalid()
+            <input type="text" [formField]="userLoginForm.email" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !userLoginForm.email().invalid(),
+    'input-error': focused() && userLoginForm.email().invalid()
   }" (focus)="focused.set(true)" />
 
-            <div class="label-box">
-              @if (focused() && signalForm.email().invalid()){
-              @for (error of signalForm.email().errors(); track error.kind) {
-              <div class="label label-start" animate.leave="label-leave"><span class="label-text-alt text-error">{{
-                  error.message
-                  }}</span></div>
-              }}
+            <div class="error-label-box">
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: userLoginForm.email }"></ng-container>
             </div>
           </div>
 
           <div class="flex gap-2 mt-5">
-            <button type="submit" [disabled]="signalForm().invalid() || signalForm().pending()" class="btn btn-primary">
+            <button type="submit" [disabled]="userLoginForm().invalid() || userLoginForm().pending()"
+              class="btn btn-primary">
               Submit (Signal)
             </button>
           </div>
@@ -61,3 +53,14 @@
     </div>
   </div>
 </div>
+
+<!-- Form Error Template -->
+<ng-template #formError let-control>
+  @if (focused() && control().invalid()){
+  @for (error of control().errors(); track error.kind) {
+  <div class="label error-label-start" animate.leave="error-label-leave"><span
+      class="label-text-alt text-xs text-error">{{
+      error.message
+      }}</span></div>
+  }}
+</ng-template>

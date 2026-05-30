@@ -10,34 +10,40 @@ import {
   provideSignalFormsConfig,
 } from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 
-interface LoginData {
+interface UserLoginData {
   username: string;
   email: string;
 }
 
+const userLoginDataInitialState: UserLoginData = {
+  username: '',
+  email: '',
+};
+
 @Component({
   selector: 'app-example2',
-  imports: [RouterLink, Header, FormField, JsonPipe],
+  imports: [RouterLink, Header, FormField, JsonPipe, NgTemplateOutlet],
   templateUrl: './example2.html',
   styles: `
-    .label-box {
-      min-height: 21px;
-      margin-top: 4px;
+    .error-label-box {
+      min-height: 20px;
+      margin-top: 3px;
       overflow: hidden;
     }
 
-    .label-start {
+    .error-label-start {
       transform: translateY(0);
-      transition: all 0.25s ease-in-out;
+      transition: transform 0.25s ease-in-out;
       @starting-style {
         transform: translateY(-100%);
       }
     }
 
-    .label-leave {
+    .error-label-leave {
       transform: translateY(-100%);
-      transition: all 0.25s ease-in-out;
+      transition: transform 0.25s ease-in-out;
     }
 
     .is-invalid {
@@ -56,24 +62,24 @@ interface LoginData {
 export default class Example2 {
   focused = signal(false);
 
-  signalUser = signal<LoginData>({
-    username: '',
-    email: '',
+  protected readonly userLoginData = signal<UserLoginData>(userLoginDataInitialState);
+
+  protected readonly userLoginForm = form(this.userLoginData, (path) => {
+    required(path.username, { message: 'Required' });
+    required(path.email, { message: 'Required' });
+    email(path.email, { message: 'Invalid email' });
   });
 
-  signalForm = form(this.signalUser, (schemaPath) => {
-    required(schemaPath.username, { message: 'Required' });
-    required(schemaPath.email, { message: 'Required' });
-    email(schemaPath.email, { message: 'Invalid email' });
-  });
+  protected readonly lastSubmission = signal<UserLoginData | null>(null);
 
-  lastSubmission = signal<LoginData | null>(null);
-
-  onSubmit(event: Event) {
+  protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
-    submit(this.signalForm, async (form) => {
-      console.log('Form is valid, submitting...', this.signalUser());
-      this.lastSubmission.set({ ...form().value() });
+    await submit(this.userLoginForm, async (form) => {
+      console.log('Form is valid, submitting...', this.userLoginData());
+      this.lastSubmission.set(form().value());
+      form().reset(userLoginDataInitialState);
+      this.focused.set(false);
+      return undefined;
     });
   }
 }
