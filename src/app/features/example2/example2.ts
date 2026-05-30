@@ -9,8 +9,7 @@ import {
   submit,
   provideSignalFormsConfig,
 } from '@angular/forms/signals';
-import { JsonPipe } from '@angular/common';
-import { NgTemplateOutlet } from '@angular/common';
+import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 
 interface UserLoginData {
   username: string;
