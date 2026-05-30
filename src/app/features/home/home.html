@@ -11,15 +11,15 @@
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-6 py-16">
+  <!-- Main Content (max-width: 1280px) -->
+  <main class="max-w-7xl mx-auto px-6 pt-16 pb-12">
     <!-- Intro Section (max-width: 768px) -->
-    <div class="mb-16">
+    <div class="max-w-3xl mb-16">
       <h2 class="mb-6 text-5xl leading-tight font-bold">
         Learn <span class="bg-clip-text text-transparent bg-linear-to-r from-[#FF31CE] to-[#EB0F24]">Signal
           Forms</span>
       </h2>
-      <p class="max-w-3xl text-xl text-[#8b949e] leading-relaxed">
+      <p class="text-xl text-[#8b949e] leading-relaxed">
         A series of practical examples showcasing how to leverage the latest Angular Signals features in reactive forms.
         From basics to advanced patterns.
       </p>
@@ -27,14 +27,14 @@
 
     <!-- Examples Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      @for (example of examples; track example.id; ; let i = $index) {
+      @for (example of examples; track example.id; let i = $index) {
       <a [routerLink]="`/example${example.id}`" (click)="onSendExampleData(example.title, example.origin)"
         class="group relative p-6 border border-[#30363d] rounded-lg hover:border-[white] bg-[#161b22] hover:shadow-lg hover:shadow-[#EB0F2420] active:translate-y-2 transition-all duration-300 ease-out"
         animate.enter="entering" [style.animation-delay.ms]="i * 100">
 
         <!-- Example Number Badge -->
         <div
-          class="absolute top-4 right-4 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF31CE] text-sm font-bold">
+          class="absolute top-4 right-4 flex justify-center items-center w-8 h-8 rounded-full bg-[#FF31CE] text-sm font-bold">
           {{ example.id }}
         </div>
 
@@ -49,7 +49,7 @@
         </div>
 
         <!-- Arrow Icon -->
-        <div class="flex items-center gap-2 text-[#8b949e] group-hover:text-[#EB0F24] transition-colors">
+        <div class="inline-flex items-center gap-2 text-[#8b949e] group-hover:text-[#EB0F24] transition-text">
           <span class="text-sm font-medium">Go to example</span>
           <svg class="relative top-px w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
             stroke="currentColor" viewBox="0 0 24 24">

@@ -8,7 +8,7 @@ import { DataService } from '../../shared/services/data.service';
   templateUrl: './home.html',
   styles: `
     .entering {
-      animation: fadeInUp 0.4s ease-in-out both;
+      animation: fadeInUp 0.4s ease-in-out;
     }
 
     @keyframes fadeInUp {
@@ -25,7 +25,7 @@ import { DataService } from '../../shared/services/data.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Home {
-  protected readonly examples = [
+  private readonly _examples = [
     {
       id: 1,
       title: 'Basic Signal Form 1',
@@ -46,9 +46,13 @@ export default class Home {
     },
   ];
 
-  private readonly _dataService = inject(DataService);
+  get examples() {
+    return this._examples;
+  }
+
+  private readonly dataService = inject(DataService);
 
   protected onSendExampleData(title: string, origin: string): void {
-    this._dataService.setPageData(title, origin);
+    this.dataService.setPageData(title, origin);
   }
 }

@@ -4,8 +4,8 @@ import { Injectable, signal, effect } from '@angular/core';
   providedIn: 'root',
 })
 export class DataService {
-  public readonly pageTitle = signal<string>('');
-  public readonly originLink = signal<string>('');
+  public readonly pageTitle = signal('');
+  public readonly originLink = signal('');
 
   constructor() {
     const savedTitle = sessionStorage.getItem('pageTitle');
