@@ -55,9 +55,9 @@ import { numericOnly } from './user-profile';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {
-  protected readonly userProfile = signal<UserProfile>(userProfileInitialState);
+  protected readonly userModel = signal<UserProfile>(userProfileInitialState);
 
-  protected readonly userForm = form(this.userProfile, (path) => {
+  protected readonly userForm = form(this.userModel, (path) => {
     /* FirstName and lastName validation with schema */
     (apply(path.firstName, userProfileSchema),
       apply(path.lastName, userProfileSchema),
@@ -151,7 +151,7 @@ export default class Example1 {
   }
 
   protected readonly fullName = computed(
-    () => `${this.userProfile().firstName} ${this.userProfile().lastName}`,
+    () => `${this.userModel().firstName} ${this.userModel().lastName}`,
   );
 
   protected async onSubmit(event: SubmitEvent) {
@@ -219,6 +219,7 @@ In custom validation, ctx object gives access to:
 /*
 We can access all individual fields from our form:
   this.userForm.firstName().value.set("Peter");
+  this.userForm.firstName().value();
 
 We can access the state of individual fields, such as:
 touched

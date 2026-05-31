@@ -61,9 +61,9 @@ const userLoginDataInitialState: UserLoginData = {
 export default class Example2 {
   focused = signal(false);
 
-  protected readonly userLoginData = signal<UserLoginData>(userLoginDataInitialState);
+  protected readonly userLoginModel = signal<UserLoginData>(userLoginDataInitialState);
 
-  protected readonly userLoginForm = form(this.userLoginData, (path) => {
+  protected readonly userLoginForm = form(this.userLoginModel, (path) => {
     required(path.username, { message: 'Required' });
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
@@ -74,7 +74,7 @@ export default class Example2 {
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
     await submit(this.userLoginForm, async (form) => {
-      console.log('Form is valid, submitting...', this.userLoginData());
+      console.log('Form is valid, submitting...', this.userLoginModel());
       this.lastSubmission.set(form().value());
       form().reset(userLoginDataInitialState);
       this.focused.set(false);
