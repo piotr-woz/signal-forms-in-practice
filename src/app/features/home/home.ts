@@ -28,19 +28,19 @@ export default class Home {
   private readonly _examples = [
     {
       id: 1,
-      title: 'Basic Signal Form 1',
+      title: 'Signal Form 1',
       description: 'Built-in and Custom Validation with Angular Material: A Complete Overview',
       origin: 'https://www.angularspace.com/signal-forms/',
     },
     {
       id: 2,
-      title: 'Basic Signal Form 2',
+      title: 'Signal Form 2',
       description: 'Basic implementation with Signal inputs.',
       origin: 'https://www.angularspace.com/signal-forms/',
     },
     {
       id: 3,
-      title: 'Basic Signal Form 3',
+      title: 'Signal Form 3',
       description: 'Basic implementation with Signal inputs.',
       origin: 'https://www.angularspace.com/signal-forms/',
     },

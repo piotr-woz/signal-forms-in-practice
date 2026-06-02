@@ -154,6 +154,7 @@ export default class Example1 {
     () => `${this.userModel().firstName} ${this.userModel().lastName}`,
   );
 
+  /* Submit Handler */
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
     console.log(this.userForm().value());
@@ -174,6 +175,7 @@ export default class Example1 {
         ];
       }
     });
+
     // 👇 automatically focus the first field with an error
     const firstError = this.userForm().errorSummary()[0];
     if (firstError?.fieldTree) {
@@ -197,8 +199,9 @@ export default class Example1 {
   // }
 }
 
+/* --------------------------------------------------------------------------- */
 /*
-Built-in validators include:
+1. Built-in validators include:
   required(path)
   min(path, minValue)
   max(path, maxValue)
@@ -209,7 +212,7 @@ Built-in validators include:
  */
 
 /*
-In custom validation, ctx object gives access to:
+2. In custom validation, ctx object gives access to:
   ctx.value() - current field value
   ctx.valueOf(path) - value of another field
   ctx.state() - touched/dirty state
@@ -217,11 +220,11 @@ In custom validation, ctx object gives access to:
  */
 
 /*
-We can access all individual fields from our form:
+3a. We can access all individual fields from our form:
   this.userForm.firstName().value.set("Peter");
   this.userForm.firstName().value();
 
-We can access the state of individual fields, such as:
+3b. We can access the state of individual fields, such as:
 touched
 dirty
 valid / invalid / pending
@@ -232,7 +235,7 @@ readonly
 
   this.userForm.phone().dirty();
 
-And we can also acccess that information on the entire form
+3c. And we can also acccess that information on the entire form
   this.userForm().value(); // returns the entire form value
   this.userForm().valid(); // returns true or false
  */

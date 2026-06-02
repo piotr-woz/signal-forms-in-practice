@@ -1,12 +1,17 @@
-<div class="min-h-screen bg-[#0d1117] text-white font-['Inter_Tight',sans-serif]">
+<div class="min-h-screen bg-[#0d1117] text-white font-['Inter_Tight', sans-serif]">
   <div class="absolute inset-0 z-0" routerLink="/home"></div>
 
   <app-header />
 
-  <div class="px-6 pt-26 pb-6">
+  <div class="px-6 pt-26 pb-14">
     <mat-card appearance="outlined" class="relative z-10 max-w-xl mx-auto px-8 py-6 bg-[#445469]!">
-      <form (submit)="onSubmit($event)" autocomplete="off" novalidate>
+      <h1 class="text-2xl font-bold leading-relaxed">Example 1: User Profile Form</h1>
+      <p class="mb-4 text-[#FF31CE] text-sm">Built-in and Custom Validation with Angular Material: A Complete Overview
+      </p>
+      <p class="mb-6 text-sm">This example demonstrates a user profile form with various input fields,
+        including conditional and custom validation with dynamic error messages.</p>
 
+      <form (submit)="onSubmit($event)" autocomplete="off" novalidate>
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="firstName">First name</mat-label>
           @let fn = userForm.firstName;
@@ -61,12 +66,13 @@
             {{userForm().submitting() ? 'Sending...' : 'Submit'}}
           </button>
         </div>
-
       </form>
+
     </mat-card>
   </div>
 </div>
 
+<!-- --------------------------------------------------------------------------- -->
 <!-- Pattern before implementing FormError component with attribute selector -->
 <!-- We dont't need to use @if for the touched state (mat-error automatically handles the touched and dirty state) -->
 <!--
