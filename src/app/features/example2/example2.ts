@@ -45,14 +45,12 @@ export function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): voi
     const start = new Date(startDate).setHours(0, 0, 0, 0);
     const end = new Date(endDate).setHours(0, 0, 0, 0);
 
-    if (end >= start) {
-      return null;
-    }
-
-    return {
-      kind: 'invalid_date_range',
-      message: 'End date must be the same as or after the start date.',
-    };
+    return end >= start
+      ? null
+      : {
+          message: 'End date must be the same as or after the start date.',
+          kind: 'invalid_date_range',
+        };
   });
 }
 

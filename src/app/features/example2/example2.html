@@ -33,7 +33,28 @@
             </div>
           </div>
 
-          <div class="mt-5">
+          <div class="form-control max-w-xs mt-2">
+            <label class="label"><span class="label-text">Start date</span></label>
+            <input type="date" [formField]="bookingForm.date.start" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !bookingForm.date().invalid(),
+    'input-error': focused() && bookingForm.date().invalid()
+  }" (focus)="focused.set(true)" />
+
+            <div class="error-label-box">
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.date }"></ng-container>
+            </div>
+          </div>
+
+          <div class="form-control max-w-xs mt-2">
+            <label class="label"><span class="label-text">End date</span></label>
+            <input type="date" [formField]="bookingForm.date.end" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !bookingForm.date().invalid(),
+    'input-error': focused() && bookingForm.date().invalid()
+  }" (focus)="focused.set(true)" />
+          </div>
+
+
+          <div class="mt-14">
             <button type="submit" [disabled]="bookingForm().invalid() || bookingForm().pending()"
               class="btn btn-primary">
               {{bookingForm().submitting() ? 'Sending...' : 'Submit'}}
