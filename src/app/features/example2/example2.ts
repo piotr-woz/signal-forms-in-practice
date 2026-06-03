@@ -8,18 +8,53 @@ import {
   email,
   submit,
   provideSignalFormsConfig,
+  SchemaPath,
+  validate,
 } from '@angular/forms/signals';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 
-interface UserLoginData {
-  username: string;
-  email: string;
+interface BookingDate {
+  start: Date;
+  end: Date;
 }
 
-const userLoginDataInitialState: UserLoginData = {
-  username: '',
+interface BookingData {
+  guestName: string;
+  email: string;
+  date: BookingDate;
+}
+
+const bookingDataInitialState: BookingData = {
+  guestName: '',
   email: '',
+  date: {
+    start: new Date(),
+    end: new Date(),
+  },
 };
+
+export function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): void {
+  validate(path, (ctx) => {
+    const startDate = ctx.fieldTree.start().value();
+    const endDate = ctx.fieldTree.end().value();
+
+    if (!startDate || !endDate) {
+      return null;
+    }
+
+    const start = new Date(startDate).setHours(0, 0, 0, 0);
+    const end = new Date(endDate).setHours(0, 0, 0, 0);
+
+    if (end >= start) {
+      return null;
+    }
+
+    return {
+      kind: 'invalid_date_range',
+      message: 'End date must be the same as or after the start date.',
+    };
+  });
+}
 
 @Component({
   selector: 'app-example2',
@@ -61,22 +96,24 @@ const userLoginDataInitialState: UserLoginData = {
 export default class Example2 {
   focused = signal(false);
 
-  protected readonly userLoginModel = signal<UserLoginData>(userLoginDataInitialState);
+  protected readonly bookingModel = signal<BookingData>(bookingDataInitialState);
 
-  protected readonly userLoginForm = form(this.userLoginModel, (path) => {
-    required(path.username, { message: 'Required' });
+  protected readonly bookingForm = form(this.bookingModel, (path) => {
+    required(path.guestName, { message: 'Required' });
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
+    startDateMustBeBeforeEndDate(path.date);
   });
 
-  protected readonly lastSubmission = signal<UserLoginData | null>(null);
+  protected readonly lastSubmission = signal<BookingData | null>(null);
 
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
-    await submit(this.userLoginForm, async (form) => {
-      console.log('Form is valid, submitting...', this.userLoginModel());
+    await submit(this.bookingForm, async (form) => {
+      console.log('Form is valid, submitting...', this.bookingModel());
       this.lastSubmission.set(form().value());
-      form().reset(userLoginDataInitialState);
+
+      form().reset(bookingDataInitialState);
       this.focused.set(false);
       return undefined;
     });

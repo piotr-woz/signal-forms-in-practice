@@ -10,34 +10,33 @@
 
         <form (submit)="onSubmit($event)" class="mt-5" autocomplete="off" novalidate>
           <div class="form-control max-w-xs">
-            <label class="label"><span class="label-text">Username</span></label>
-            <input type="text" [formField]="userLoginForm.username" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !userLoginForm.username().invalid(),
-    'input-error': focused() && userLoginForm.username().invalid()
+            <label class="label"><span class="label-text">Guest name</span></label>
+            <input type="text" [formField]="bookingForm.guestName" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !bookingForm.guestName().invalid(),
+    'input-error': focused() && bookingForm.guestName().invalid()
   }" (focus)="focused.set(true)" />
 
             <div class="error-label-box">
-              <ng-container
-                *ngTemplateOutlet="formError; context: { $implicit: userLoginForm.username }"></ng-container>
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.guestName }"></ng-container>
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">Email</span></label>
-            <input type="text" [formField]="userLoginForm.email" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !userLoginForm.email().invalid(),
-    'input-error': focused() && userLoginForm.email().invalid()
+            <input type="text" [formField]="bookingForm.email" class="input input-bordered w-full" [class]="{
+    'input-primary': !focused() || !bookingForm.email().invalid(),
+    'input-error': focused() && bookingForm.email().invalid()
   }" (focus)="focused.set(true)" />
 
             <div class="error-label-box">
-              <ng-container *ngTemplateOutlet="formError; context: { $implicit: userLoginForm.email }"></ng-container>
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.email }"></ng-container>
             </div>
           </div>
 
           <div class="mt-5">
-            <button type="submit" [disabled]="userLoginForm().invalid() || userLoginForm().pending()"
+            <button type="submit" [disabled]="bookingForm().invalid() || bookingForm().pending()"
               class="btn btn-primary">
-              {{userLoginForm().submitting() ? 'Sending...' : 'Submit'}}
+              {{bookingForm().submitting() ? 'Sending...' : 'Submit'}}
             </button>
           </div>
         </form>
