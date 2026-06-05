@@ -107,11 +107,11 @@ export default class Example2 {
 
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
-    await submit(this.bookingForm, async (form) => {
+    await submit(this.bookingForm, async (field) => {
       console.log('Form is valid, submitting...', this.bookingModel());
-      this.lastSubmission.set(form().value());
+      this.lastSubmission.set(field().value());
 
-      form().reset(bookingDataInitialState);
+      field().reset(bookingDataInitialState);
       this.focused.set(false);
       return undefined;
     });
