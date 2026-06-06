@@ -159,18 +159,18 @@ export default class Example1 {
     event.preventDefault();
     console.log(this.userForm().value());
     // async logic that returns either undefined (success) or array of errors
-    await submit(this.userForm, async (field) => {
+    await submit(this.userForm, async (form) => {
       try {
         // await this.userService.saveForm(form().value()); // call to API to save our form data (example)
-        field().reset(userProfileInitialState);
+        form().reset(userProfileInitialState);
         return undefined;
       } catch (error) {
         // simulate server error for first name field
         return [
           {
             message: (error as Error).message,
-            kind: 'server',
-            fieldTree: field.firstName,
+            kind: 'serverError',
+            fieldTree: form.firstName,
           },
         ];
       }
@@ -186,13 +186,13 @@ export default class Example1 {
   /* With fetch */
   // protected async onSubmit(event: SubmitEvent) {
   //   event.preventDefault();
-  //   await submit(this.userForm, async (field) => {
+  //   await submit(this.userForm, async (form) => {
   //     try {
   //       await fetch('https://api.example.com/user-profile', {
   //         method: 'PUT',
-  //         body: JSON.stringify(field().value()),
+  //         body: JSON.stringify(form().value()),
   //       });
-  //       field().reset(userProfileInitialState);
+  //       form().reset(userProfileInitialState);
   //       return undefined;
   //     }
   //   });

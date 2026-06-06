@@ -107,13 +107,30 @@ export default class Example2 {
 
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
-    await submit(this.bookingForm, async (field) => {
+    const success = await submit(this.bookingForm, async (form) => {
       console.log('Form is valid, submitting...', this.bookingModel());
-      this.lastSubmission.set(field().value());
+      // simulate API call
+      // const result = await fetch('https://api.example.com/booking', {
+      //   method: 'PUT',
+      //   body: JSON.stringify(form().value()),
+      // });
 
-      field().reset(bookingDataInitialState);
-      this.focused.set(false);
-      return undefined;
+      const result = { ok: true }; // simulate successful response
+      // const result = { ok: false }; // simulate failed response
+      this.lastSubmission.set(form().value());
+
+      if (result.ok) return;
+      return [
+        {
+          message: 'Failed to save',
+          kind: 'serverError',
+          fieldTree: form.guestName,
+        },
+      ];
     });
+    if (success) {
+      this.bookingForm().reset(bookingDataInitialState);
+      this.focused.set(false);
+    }
   }
 }
