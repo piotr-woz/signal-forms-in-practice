@@ -233,7 +233,7 @@ valid / invalid / pending
 errors
 disabled
 hidden
-readonly
+readonly - field is not editable but its value is still included in the form value, field is not taken into account when calculating form validity
 
   this.userForm.phone().dirty();
 
