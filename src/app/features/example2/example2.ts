@@ -94,7 +94,7 @@ export function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): voi
 export default class Example2 {
   focused = signal(false);
 
-  protected readonly bookingModel = signal<BookingData>(bookingDataInitialState);
+  private readonly bookingModel = signal<BookingData>(bookingDataInitialState);
 
   protected readonly bookingForm = form(this.bookingModel, (path) => {
     required(path.guestName, { message: 'Required' });

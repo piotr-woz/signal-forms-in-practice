@@ -55,7 +55,7 @@ import { numericOnly } from './user-profile';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {
-  protected readonly userModel = signal<UserProfile>(userProfileInitialState);
+  private readonly userModel = signal<UserProfile>(userProfileInitialState);
 
   protected readonly userForm = form(this.userModel, (path) => {
     /* FirstName and lastName validation with schema */
@@ -211,6 +211,7 @@ export default class Example1 {
   maxLength(path, length)
   pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/)
   email(path)
+  debounce(path, time) - delays validation by specified time in milliseconds, useful for validations that require async operations such as API calls to check if email is already taken
  */
 
 /*
