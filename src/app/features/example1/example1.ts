@@ -210,6 +210,9 @@ export default class Example1 {
   maxLength(path, length)
   pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/)
   email(path)
+  minDate(path, minDate) ...for example minDate(path.birthDate, new Date('1900-01-01'))
+  maxDate(path, maxDate) ...for example maxDate(path.birthDate, new Date())
+
   debounce(path, time) - delays validation by specified time in milliseconds, useful for validations that require async operations such as API calls to check if email is already taken
  */
 

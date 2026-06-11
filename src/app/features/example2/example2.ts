@@ -10,6 +10,8 @@ import {
   provideSignalFormsConfig,
   SchemaPath,
   validate,
+  minDate,
+  maxDate,
 } from '@angular/forms/signals';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 
@@ -100,6 +102,8 @@ export default class Example2 {
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
     startDateMustBeBeforeEndDate(path.date);
+    minDate(path.date.start, new Date());
+    maxDate(path.date.end, new Date('2026-12-31'));
   });
 
   protected readonly lastSubmission = signal<BookingData | null>(null);
