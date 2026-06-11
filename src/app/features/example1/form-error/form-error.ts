@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FieldState } from '@angular/forms/signals';
 
 @Component({
@@ -8,7 +8,6 @@ import { FieldState } from '@angular/forms/signals';
       <span>{{ error.message }}</span>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormError {
   public readonly control = input.required<FieldState<unknown>>();

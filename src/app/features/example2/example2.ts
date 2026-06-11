@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import {
@@ -89,7 +89,6 @@ export function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): voi
       },
     }),
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example2 {
   focused = signal(false);

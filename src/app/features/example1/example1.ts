@@ -1,4 +1,4 @@
-import { Component, signal, computed, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, signal, computed, effect } from '@angular/core';
 import {
   form,
   FormField,
@@ -52,7 +52,6 @@ import { numericOnly } from './user-profile';
       },
     }),
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {
   private readonly userModel = signal<UserProfile>(userProfileInitialState);

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../shared/services/data.service';
 
@@ -22,7 +22,6 @@ import { DataService } from '../../shared/services/data.service';
       }
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Home {
   private readonly _examples = [

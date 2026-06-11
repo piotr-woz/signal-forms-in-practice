@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../services/data.service';
 
@@ -6,7 +6,6 @@ import { DataService } from '../../services/data.service';
   selector: 'app-header',
   imports: [RouterLink],
   templateUrl: './header.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   private readonly dataService = inject(DataService);
