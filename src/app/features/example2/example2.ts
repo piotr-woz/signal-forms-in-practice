@@ -102,7 +102,8 @@ export default class Example2 {
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
     startDateMustBeBeforeEndDate(path.date);
-    minDate(path.date.start, new Date());
+    const today = new Date().toLocaleDateString('en-CA');
+    minDate(path.date.start, new Date(today));
     maxDate(path.date.end, new Date('2026-12-31'));
   });
 

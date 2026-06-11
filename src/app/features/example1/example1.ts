@@ -214,6 +214,7 @@ export default class Example1 {
   maxDate(path, maxDate) ...for example maxDate(path.birthDate, new Date())
 
   debounce(path, time) - delays validation by specified time in milliseconds, useful for validations that require async operations such as API calls to check if email is already taken
+  debounce(path, 'blur') - delays validation until the field is blurred, useful for validations that require async operations such as API calls to check if email is already taken
  */
 
 /*
