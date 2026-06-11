@@ -71,7 +71,13 @@
 
         @if (lastSubmission()) {
         <div class="alert alert-success mt-5 text-sm shadow">
-          <span>Last successful submission: {{ lastSubmission() | json }}</span>
+          <span>Last successful submission:
+            @if (debouncedLastSubmission.isLoading()) {
+            <span>Waiting for stable submission...</span>
+            }
+            {{ debouncedLastSubmission.isLoading() ? '' : debouncedLastSubmission.value()
+            | json }}</span>
+          <!-- <span>Last successful submission: {{ lastSubmission() | json }}</span> -->
         </div>
         }
       </div>

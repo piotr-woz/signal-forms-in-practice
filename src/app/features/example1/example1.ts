@@ -11,6 +11,7 @@ import {
   validateTree,
   hidden,
   provideSignalFormsConfig,
+  debounce,
 } from '@angular/forms/signals';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -60,6 +61,8 @@ export default class Example1 {
     /* FirstName and lastName validation with schema */
     (apply(path.firstName, userProfileSchema),
       apply(path.lastName, userProfileSchema),
+      debounce(path.firstName, 'blur'),
+      debounce(path.lastName, 'blur'),
       /* --------------------------------------------------------------------------- */
 
       /* Phone validation with custom validator function */
@@ -213,7 +216,7 @@ export default class Example1 {
   minDate(path, minDate) ...for example minDate(path.birthDate, new Date('1900-01-01'))
   maxDate(path, maxDate) ...for example maxDate(path.birthDate, new Date())
 
-  debounce(path, time) - delays validation by specified time in milliseconds, useful for validations that require async operations such as API calls to check if email is already taken
+  debounce(path, time) ...for example debounce(path.email, 400) - delays validation by specified time in milliseconds, useful for validations that require async operations such as API calls to check if email is already taken
   debounce(path, 'blur') - delays validation until the field is blurred, useful for validations that require async operations such as API calls to check if email is already taken
  */
 
@@ -263,4 +266,11 @@ validateHttp(path.email, {
 });
 
 reloadValidation() - method added to allow to easily re-run the asynchronous validators of a field. When called on a field, it will re-run the asynchronous validators of this field and all its descendants, by calling the reload() method of the underlying resources. This matches what we could do in legacy forms with updateValueAndValidity().
+ */
+
+/*
+There are now three variations of debouncing in Angular:
+    - you can debounce a form field value on input with: debounce(field, delay)
+    - you can debounce an asynchronous validator with: validateHttp(field, { debounce: delay })
+    - or you can debounce any signal value with: debounced(signal, delay)
  */

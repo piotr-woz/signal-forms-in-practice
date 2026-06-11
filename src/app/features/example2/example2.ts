@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, debounced } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import {
@@ -114,6 +114,7 @@ export default class Example2 {
   });
 
   protected readonly lastSubmission = signal<BookingData | null>(null);
+  protected readonly debouncedLastSubmission = debounced(() => this.lastSubmission(), 2000);
 
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
