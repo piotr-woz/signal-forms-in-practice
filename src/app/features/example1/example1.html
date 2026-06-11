@@ -73,6 +73,8 @@
 </div>
 
 <!-- --------------------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------------------- -->
 <!-- Pattern before implementing FormError component with attribute selector -->
 <!-- We dont't need to use @if for the touched state (mat-error automatically handles the touched and dirty state) -->
 <!--
@@ -82,3 +84,20 @@
 }
 }
  -->
+
+<!-- getError() - field method that allows to easily get the error of a specific validator, by passing the error kind as an argument, and removes the need to iterate over the errors object of the field to find the error you are looking for: -->
+<!-- ...for example:
+
+<input id="login" [formField]="userForm.login" />
+@let login = userForm.login();
+@if (login.touched() && login.invalid()) {
+  @if (login.getError('required')) {
+    <div>Login is required</div>
+  }
+
+// getError() narrows the type of the error to minLength error
+@if (login.getError('minLength'); as minLengthError) {
+<div>Login should be {{ minLengthError.minLength }} characters</div>
+}
+}
+-->

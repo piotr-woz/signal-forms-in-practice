@@ -12,45 +12,51 @@
           <div class="form-control max-w-xs">
             <label class="label"><span class="label-text">Guest name</span></label>
             <input type="text" [formField]="bookingForm.guestName" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !bookingForm.guestName().invalid(),
-    'input-error': focused() && bookingForm.guestName().invalid()
-  }" (focus)="focused.set(true)" />
+    'input-primary': !focused().guestName || !bookingForm.guestName().invalid(),
+    'input-error': focused().guestName && bookingForm.guestName().invalid()
+  }" (focus)="focused.set({ ...focused(), guestName: true })" />
 
             <div class="error-label-box">
-              <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.guestName }"></ng-container>
+              @if (focused().guestName) {
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.guestName}"></ng-container>
+              }
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">Email</span></label>
             <input type="text" [formField]="bookingForm.email" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !bookingForm.email().invalid(),
-    'input-error': focused() && bookingForm.email().invalid()
-  }" (focus)="focused.set(true)" />
+    'input-primary': !focused().email || !bookingForm.email().invalid(),
+    'input-error': focused().email && bookingForm.email().invalid()
+  }" (focus)="focused.set({ ...focused(), email: true })" />
 
             <div class="error-label-box">
+              @if (focused().email) {
               <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.email }"></ng-container>
+              }
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">Start date</span></label>
             <input type="date" [formField]="bookingForm.date.start" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !bookingForm.date().invalid(),
-    'input-error': focused() && bookingForm.date().invalid()
-  }" (focus)="focused.set(true)" />
+    'input-primary': !focused().date || !bookingForm.date().invalid(),
+    'input-error': focused().date && bookingForm.date().invalid()
+  }" (focus)="focused.set({ ...focused(), date: true })" />
 
             <div class="error-label-box">
+              @if (focused().date) {
               <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.date }"></ng-container>
+              }
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">End date</span></label>
             <input type="date" [formField]="bookingForm.date.end" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused() || !bookingForm.date().invalid(),
-    'input-error': focused() && bookingForm.date().invalid()
-  }" (focus)="focused.set(true)" />
+    'input-primary': !focused().date || !bookingForm.date().invalid(),
+    'input-error': focused().date && bookingForm.date().invalid()
+  }" (focus)="focused.set({ ...focused(), date: true })" />
           </div>
 
 
@@ -75,7 +81,7 @@
 
 <!-- Form Error Template -->
 <ng-template #formError let-control>
-  @if (focused() && control().invalid()){
+  @if (control().invalid()){
   @for (error of control().errors(); track error.kind) {
   <div class="label error-label-start" animate.leave="error-label-leave"><span
       class="label-text-alt text-xs text-error">{{

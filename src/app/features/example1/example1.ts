@@ -245,3 +245,22 @@ readonly - field is not editable but its value is still included in the form val
   this.userForm().value(); // returns the entire form value
   this.userForm().valid(); // returns true or false
  */
+
+/*
+4. markAsTouched() - marks a field and all its descendants as touched, instead of only the field itself. This behavior can be overridden by passing { skipDescendants: true } as an argument to the method.
+ */
+
+/*
+5. validateAsync() and validateHttp() - asynchronous validators of a field that return a Promise. The field is marked as pending until the Promise is resolved. If the Promise resolves to undefined, the field is valid. If it resolves to an error object or an array of error objects, the field is invalid and the errors are set on the field.
+
+...for example:
+validateHttp(path.email, {
+  // httpResource is triggered when the email signal changes
+  request: email => `/api/users/check?email=${email.value()}`,
+  // specify a debounce duration to avoid sending a request on every keystroke
+  debounce: 400,
+  // ...
+});
+
+reloadValidation() - method added to allow to easily re-run the asynchronous validators of a field. When called on a field, it will re-run the asynchronous validators of this field and all its descendants, by calling the reload() method of the underlying resources. This matches what we could do in legacy forms with updateValueAndValidity().
+ */

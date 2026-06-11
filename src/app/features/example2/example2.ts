@@ -93,7 +93,13 @@ export function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): voi
   ],
 })
 export default class Example2 {
-  focused = signal(false);
+  private readonly focusedInitialState = {
+    guestName: false,
+    email: false,
+    date: false,
+  };
+
+  protected readonly focused = signal(this.focusedInitialState);
 
   private readonly bookingModel = signal<BookingData>(bookingDataInitialState);
 
@@ -134,7 +140,7 @@ export default class Example2 {
     });
     if (success) {
       this.bookingForm().reset(bookingDataInitialState);
-      this.focused.set(false);
+      this.focused.set(this.focusedInitialState);
     }
   }
 }
