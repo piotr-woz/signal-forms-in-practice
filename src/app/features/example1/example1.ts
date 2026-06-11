@@ -114,7 +114,7 @@ export default class Example1 {
 
       /* Confirm password validation */
       // confirm password field is hidden if password is empty
-      hidden(path.confirmPassword, ({ valueOf }) => valueOf(path.password) === ''),
+      hidden(path.confirmPassword, { when: ({ valueOf }) => valueOf(path.password) === '' }),
       // confirm password must match password (custom validator)
       validate(
         path.confirmPassword,
