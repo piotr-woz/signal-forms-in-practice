@@ -1,8 +1,6 @@
-import { Injectable, signal, effect } from '@angular/core';
+import { Service, signal, effect } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class DataService {
   public readonly pageTitle = signal('');
   public readonly originLink = signal('');
