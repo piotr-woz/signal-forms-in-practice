@@ -34,8 +34,8 @@ export default class Home {
     {
       id: 2,
       title: 'Signal Form 2',
-      description: 'Basic implementation with Signal inputs.',
-      origin: 'https://www.angularspace.com/signal-forms/',
+      description: 'Built-in and Custom Validation with daisyUI: Dates Overview',
+      origin: 'https://blog.ninja-squad.com/2026/06/03/what-is-new-angular-22.0',
     },
     {
       id: 3,

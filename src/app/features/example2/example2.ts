@@ -36,13 +36,16 @@ const bookingDataInitialState: BookingData = {
     end: new Date(),
   },
 };
+/* --------------------------------------------------------------------------- */
 
+// custom function to ensure the user is at least 18 years old
 function getEighteenYearsAgo(): Date {
   const date = new Date();
   date.setFullYear(date.getFullYear() - 18);
   return date;
 }
 
+// custom validator to ensure start date is before end date
 function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): void {
   validate(path, (ctx) => {
     const startDate = ctx.fieldTree.start().value();
