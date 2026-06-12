@@ -16,28 +16,28 @@
           <mat-label for="firstName">First name</mat-label>
           @let fn = userForm.firstName;
           <input [formField]="fn" id="firstName" matInput type="text" placeholder="First name" />
-          <mat-error app-form-error [control]="fn()"></mat-error>
+          <mat-error app-form-error [field]="fn()"></mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="lastName">Last name</mat-label>
           @let ln = userForm.lastName;
           <input [formField]="ln" id="lastName" matInput type="text" placeholder="Last name" />
-          <mat-error app-form-error [control]="ln()"></mat-error>
+          <mat-error app-form-error [field]="ln()"></mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="phone">Phone number</mat-label>
           @let pn = userForm.phone;
           <input [formField]="pn" id="phone" matInput type="text" placeholder="Phone number" />
-          <mat-error app-form-error [control]="pn()"></mat-error>
+          <mat-error app-form-error [field]="pn()"></mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="email">Email address</mat-label>
           @let ea = userForm.email;
           <input [formField]="ea" id="email" matInput type="email" placeholder="Email" />
-          <mat-error app-form-error [control]="ea()"></mat-error>
+          <mat-error app-form-error [field]="ea()"></mat-error>
         </mat-form-field>
 
         <mat-checkbox [formField]="userForm.emailMarketing" type="checkbox">Email Marketing</mat-checkbox>
@@ -46,7 +46,7 @@
           <mat-label for="password">Password</mat-label>
           @let pw = userForm.password;
           <input [formField]="pw" id="password" matInput type="password" placeholder="Password" />
-          <mat-error app-form-error [control]="pw()"></mat-error>
+          <mat-error app-form-error [field]="pw()"></mat-error>
         </mat-form-field>
 
         @if (!userForm.confirmPassword().hidden() && userForm.password().valid()) {
@@ -54,7 +54,7 @@
           <mat-label for="confirmPassword">Confirm Password</mat-label>
           @let cpw = userForm.confirmPassword;
           <input [formField]="cpw" id="confirmPassword" matInput type="password" placeholder="Confirm Password" />
-          <mat-error app-form-error [control]="cpw()"></mat-error>
+          <mat-error app-form-error [field]="cpw()"></mat-error>
         </mat-form-field>
         }
 
