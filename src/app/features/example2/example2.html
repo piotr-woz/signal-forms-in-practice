@@ -4,15 +4,15 @@
   <app-header />
 
   <div class="px-6 pt-26 pb-14">
-    <div class="card relative z-10 max-w-xl mx-auto p-4 border rounded-box border-primary bg-primary/5 shadow-xl">
+    <div class="card relative z-10 max-w-xl mx-auto p-4 border rounded-box border-[#c4c6d0] bg-[#445469] shadow-xl">
       <div class="card-body">
-        <h3 class="card-title mb-2 text-primary text-xl leading-tight font-bold">Signal Forms (v21)</h3>
+        <h3 class="card-title mb-2 text-2xl leading-relaxed font-bold">Example 2: Booking Form</h3>
 
         <form (submit)="onSubmit($event)" class="mt-5" autocomplete="off" novalidate>
           <div class="form-control max-w-xs">
             <label class="label"><span class="label-text">Guest name</span></label>
             <input type="text" [formField]="bookingForm.guestName" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused().guestName || !bookingForm.guestName().invalid(),
+    'input-neutral': !focused().guestName || !bookingForm.guestName().invalid(),
     'input-error': focused().guestName && bookingForm.guestName().invalid()
   }" (focus)="focused.set({ ...focused(), guestName: true })" />
 
@@ -26,7 +26,7 @@
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">Email</span></label>
             <input type="text" [formField]="bookingForm.email" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused().email || !bookingForm.email().invalid(),
+    'input-neutral': !focused().email || !bookingForm.email().invalid(),
     'input-error': focused().email && bookingForm.email().invalid()
   }" (focus)="focused.set({ ...focused(), email: true })" />
 
@@ -40,7 +40,7 @@
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">Date of birth</span></label>
             <input type="date" [formField]="bookingForm.dateOfBirth" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused().dateOfBirth || !bookingForm.dateOfBirth().invalid(),
+    'input-neutral': !focused().dateOfBirth || !bookingForm.dateOfBirth().invalid(),
     'input-error': focused().dateOfBirth && bookingForm.dateOfBirth().invalid()
   }" (focus)="focused.set({ ...focused(), dateOfBirth: true })" />
 
@@ -55,7 +55,7 @@
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">Start date</span></label>
             <input type="date" [formField]="bookingForm.date.start" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused().date || !bookingForm.date().invalid(),
+    'input-neutral': !focused().date || !bookingForm.date().invalid(),
     'input-error': focused().date && bookingForm.date().invalid()
   }" (focus)="focused.set({ ...focused(), date: true })" />
 
@@ -69,7 +69,7 @@
           <div class="form-control max-w-xs mt-2">
             <label class="label"><span class="label-text">End date</span></label>
             <input type="date" [formField]="bookingForm.date.end" class="input input-bordered w-full" [class]="{
-    'input-primary': !focused().date || !bookingForm.date().invalid(),
+    'input-neutral': !focused().date || !bookingForm.date().invalid(),
     'input-error': focused().date && bookingForm.date().invalid()
   }" (focus)="focused.set({ ...focused(), date: true })" />
           </div>
@@ -85,7 +85,7 @@
 
 
         @if (lastSubmission()) {
-        <div class="alert alert-success mt-5 text-sm shadow">
+        <div class="alert mt-5 bg-[#FF31CE]/50 border-neutral text-sm shadow">
           <span>Last successful submission:
             @if (debouncedLastSubmission.isLoading()) {
             <span>Waiting for stable submission...</span>

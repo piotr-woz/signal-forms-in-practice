@@ -111,6 +111,7 @@ export default class Example2 {
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
     required(path.dateOfBirth, { message: 'Required' });
+    maxDate(path.dateOfBirth, new Date(), { message: 'Date of birth cannot be in the future' });
 
     startDateMustBeBeforeEndDate(path.date);
     const today = new Date().toLocaleDateString('en-CA');
