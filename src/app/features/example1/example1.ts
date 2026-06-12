@@ -73,7 +73,7 @@ export default class Example1 {
       /* Email validation */
       // email is required only if email marketing is checked
       required(path.email, {
-        when: ({ valueOf }) => valueOf(path.emailMarketing) === true,
+        when: ({ valueOf }) => valueOf(path.emailMarketing),
         message: 'This is a required field.',
       }),
       email(path.email, { message: 'The email address is not valid.' }),
