@@ -23,12 +23,14 @@ interface BookingDate {
 interface BookingData {
   guestName: string;
   email: string;
+  dateOfBirth: Date;
   date: BookingDate;
 }
 
 const bookingDataInitialState: BookingData = {
   guestName: '',
   email: '',
+  dateOfBirth: new Date(),
   date: {
     start: new Date(),
     end: new Date(),
@@ -96,6 +98,7 @@ export default class Example2 {
   private readonly focusedInitialState = {
     guestName: false,
     email: false,
+    dateOfBirth: false,
     date: false,
   };
 
@@ -107,6 +110,8 @@ export default class Example2 {
     required(path.guestName, { message: 'Required' });
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
+    required(path.dateOfBirth, { message: 'Required' });
+
     startDateMustBeBeforeEndDate(path.date);
     const today = new Date().toLocaleDateString('en-CA');
     minDate(path.date.start, new Date(today));
