@@ -14,7 +14,7 @@
             <input type="text" [formField]="bookingForm.guestName" class="input input-bordered w-full" [class]="{
     'input-neutral': !focused().guestName || !bookingForm.guestName().invalid(),
     'input-error': focused().guestName && bookingForm.guestName().invalid()
-  }" (focus)="focused.set({ ...focused(), guestName: true })" />
+  }" (focus)="focused.set({ ...focused(), guestName: true })" placeholder="np. Jan Kowalski" />
 
             <div class="error-label-box">
               @if (focused().guestName) {
@@ -28,7 +28,7 @@
             <input type="text" [formField]="bookingForm.email" class="input input-bordered w-full" [class]="{
     'input-neutral': !focused().email || !bookingForm.email().invalid(),
     'input-error': focused().email && bookingForm.email().invalid()
-  }" (focus)="focused.set({ ...focused(), email: true })" />
+  }" (focus)="focused.set({ ...focused(), email: true })" placeholder="np. jan.kowalski@domain.com" />
 
             <div class="error-label-box">
               @if (focused().email) {

@@ -30,14 +30,20 @@ interface BookingData {
 const bookingDataInitialState: BookingData = {
   guestName: '',
   email: '',
-  dateOfBirth: new Date(),
+  dateOfBirth: getEighteenYearsAgo(),
   date: {
     start: new Date(),
     end: new Date(),
   },
 };
 
-export function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): void {
+function getEighteenYearsAgo(): Date {
+  const date = new Date();
+  date.setFullYear(date.getFullYear() - 18);
+  return date;
+}
+
+function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): void {
   validate(path, (ctx) => {
     const startDate = ctx.fieldTree.start().value();
     const endDate = ctx.fieldTree.end().value();
@@ -110,12 +116,15 @@ export default class Example2 {
     required(path.guestName, { message: 'Required' });
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
+
     required(path.dateOfBirth, { message: 'Required' });
-    maxDate(path.dateOfBirth, new Date(), { message: 'Date of birth cannot be in the future' });
+    maxDate(path.dateOfBirth, getEighteenYearsAgo());
 
     startDateMustBeBeforeEndDate(path.date);
     const today = new Date().toLocaleDateString('en-CA');
     minDate(path.date.start, new Date(today));
+    maxDate(path.date.start, new Date('2026-12-31'));
+    minDate(path.date.end, new Date(today));
     maxDate(path.date.end, new Date('2026-12-31'));
   });
 
