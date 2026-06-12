@@ -38,7 +38,7 @@ const bookingDataInitialState: BookingData = {
 };
 /* --------------------------------------------------------------------------- */
 
-// custom function to ensure the user is at least 18 years old
+// custom validator to ensure the user is at least 18 years old
 function getEighteenYearsAgo(): Date {
   const date = new Date();
   date.setFullYear(date.getFullYear() - 18);
@@ -111,18 +111,24 @@ export default class Example2 {
     date: false,
   };
 
+  // track which field is focused to control when to show error messages
   protected readonly focused = signal(this.focusedInitialState);
 
   private readonly bookingModel = signal<BookingData>(bookingDataInitialState);
 
   protected readonly bookingForm = form(this.bookingModel, (path) => {
+    /* Guest name and Email validation */
+    // guest name is required + email is required and must be a valid email address
     required(path.guestName, { message: 'Required' });
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
 
-    required(path.dateOfBirth, { message: 'Required' });
+    /* Date of birth validation with custom validator function */
+    // user must be at least 18 years old
     maxDate(path.dateOfBirth, getEighteenYearsAgo());
 
+    /* Date range validation with custom validator function */
+    // start date must be before end date + both dates must be in the future but before 31.12.2026
     startDateMustBeBeforeEndDate(path.date);
     const today = new Date().toLocaleDateString('en-CA');
     minDate(path.date.start, new Date(today));

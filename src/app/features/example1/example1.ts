@@ -58,7 +58,7 @@ export default class Example1 {
   private readonly userModel = signal<UserProfile>(userProfileInitialState);
 
   protected readonly userForm = form(this.userModel, (path) => {
-    /* FirstName and lastName validation with schema */
+    /* First name and Last name validation with schema */
     (apply(path.firstName, userProfileSchema),
       apply(path.lastName, userProfileSchema),
       debounce(path.firstName, 'blur'),
