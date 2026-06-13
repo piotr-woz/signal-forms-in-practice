@@ -135,6 +135,8 @@ export default class Example2 {
     maxDate(path.date.start, new Date('2026-12-31'));
     minDate(path.date.end, new Date(today));
     maxDate(path.date.end, new Date('2026-12-31'));
+    required(path.date.start, { message: 'Required' });
+    required(path.date.end, { message: 'Required' });
   });
 
   protected readonly lastSubmission = signal<BookingData | null>(null);

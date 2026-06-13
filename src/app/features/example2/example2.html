@@ -14,51 +14,74 @@
 
         <form (submit)="onSubmit($event)" class="mt-5" autocomplete="off" novalidate>
           <div class="form-control max-w-xs">
-            <label class="label"><span class="label-text">Guest name</span></label>
-            <input type="text" [formField]="bookingForm.guestName" class="input input-bordered w-full" [class]="{
-    'input-neutral': !focused().guestName || !bookingForm.guestName().invalid(),
-    'input-error': focused().guestName && bookingForm.guestName().invalid()
+            @let gn = bookingForm.guestName;
+            <label class="label">
+              <span class="label-text">Guest name</span>
+              @if (gn().required()) {
+              <span class="label-text">*</span>
+              }
+            </label>
+            <input type="text" [formField]="gn" class="input input-bordered w-full" [class]="{
+    'input-neutral': !focused().guestName || !gn().invalid(),
+    'input-error': focused().guestName && gn().invalid()
   }" (focus)="focused.set({ ...focused(), guestName: true })" placeholder="np. Jan Kowalski" />
 
             <div class="error-label-box">
               @if (focused().guestName) {
-              <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.guestName}"></ng-container>
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: gn}"></ng-container>
               }
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
-            <label class="label"><span class="label-text">Email</span></label>
-            <input type="text" [formField]="bookingForm.email" class="input input-bordered w-full" [class]="{
-    'input-neutral': !focused().email || !bookingForm.email().invalid(),
-    'input-error': focused().email && bookingForm.email().invalid()
+            @let ea = bookingForm.email;
+            <label class="label">
+              <span class="label-text">Email</span>
+              @if (ea().required()) {
+              <span class="label-text">*</span>
+              }
+            </label>
+            <input type="text" [formField]="ea" class="input input-bordered w-full" [class]="{
+    'input-neutral': !focused().email || !ea().invalid(),
+    'input-error': focused().email && ea().invalid()
   }" (focus)="focused.set({ ...focused(), email: true })" placeholder="np. jan.kowalski@domain.com" />
 
             <div class="error-label-box">
               @if (focused().email) {
-              <ng-container *ngTemplateOutlet="formError; context: { $implicit: bookingForm.email }"></ng-container>
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: ea }"></ng-container>
               }
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
-            <label class="label"><span class="label-text">Date of birth</span></label>
+            @let dob = bookingForm.dateOfBirth;
+            <label class="label">
+              <span class="label-text">Date of birth</span>
+              @if (dob().required()) {
+              <span class="label-text">*</span>
+              }
+            </label>
             <input type="date" [formField]="bookingForm.dateOfBirth" class="input input-bordered w-full" [class]="{
-    'input-neutral': !focused().dateOfBirth || !bookingForm.dateOfBirth().invalid(),
-    'input-error': focused().dateOfBirth && bookingForm.dateOfBirth().invalid()
+    'input-neutral': !focused().dateOfBirth || !dob().invalid(),
+    'input-error': focused().dateOfBirth && dob().invalid()
   }" (focus)="focused.set({ ...focused(), dateOfBirth: true })" />
 
             <div class="error-label-box">
               @if (focused().dateOfBirth) {
-              <ng-container
-                *ngTemplateOutlet="formError; context: { $implicit: bookingForm.dateOfBirth }"></ng-container>
+              <ng-container *ngTemplateOutlet="formError; context: { $implicit: dob }"></ng-container>
               }
             </div>
           </div>
 
           <div class="form-control max-w-xs mt-2">
-            <label class="label"><span class="label-text">Start date</span></label>
-            <input type="date" [formField]="bookingForm.date.start" class="input input-bordered w-full" [class]="{
+            @let st = bookingForm.date.start;
+            <label class="label">
+              <span class="label-text">Start date</span>
+              @if (st().required()) {
+              <span class="label-text">*</span>
+              }
+            </label>
+            <input type="date" [formField]="st" class="input input-bordered w-full" [class]="{
     'input-neutral': !focused().date || !bookingForm.date().invalid(),
     'input-error': focused().date && bookingForm.date().invalid()
   }" (focus)="focused.set({ ...focused(), date: true })" />
@@ -71,8 +94,14 @@
           </div>
 
           <div class="form-control max-w-xs mt-2">
-            <label class="label"><span class="label-text">End date</span></label>
-            <input type="date" [formField]="bookingForm.date.end" class="input input-bordered w-full" [class]="{
+            @let ed = bookingForm.date.end;
+            <label class="label">
+              <span class="label-text">End date</span>
+              @if (ed().required()) {
+              <span class="label-text">*</span>
+              }
+            </label>
+            <input type="date" [formField]="ed" class="input input-bordered w-full" [class]="{
     'input-neutral': !focused().date || !bookingForm.date().invalid(),
     'input-error': focused().date && bookingForm.date().invalid()
   }" (focus)="focused.set({ ...focused(), date: true })" />
