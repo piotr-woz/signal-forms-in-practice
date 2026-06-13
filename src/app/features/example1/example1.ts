@@ -163,7 +163,11 @@ export default class Example1 {
     // async logic that returns either undefined (success) or array of errors
     await submit(this.userForm, async (form) => {
       try {
-        // await this.userService.saveForm(form().value()); // call to API to save our form data (example)
+        // await this.userService.saveForm(form().value()); // call to API to save our form data (example1)
+
+        // const { email, password } = form().value(); // destructuring of the form value to get the email and password for authentication after saving the form data (example2)
+        // return this.userService.authenticate(email, password);
+
         form().reset(userProfileInitialState);
         return undefined;
       } catch (error) {
@@ -207,9 +211,9 @@ export default class Example1 {
 /*
 1. Built-in validators include:
   required(path)
-  min(path, minValue)
+  min(path, minValue) - for numbers
   max(path, maxValue)
-  minLength(path, length)
+  minLength(path, length) - for strings and arrays
   maxLength(path, length)
   pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/)
   email(path)
@@ -234,13 +238,16 @@ export default class Example1 {
   this.userForm.firstName().value();
 
 3b. We can access the state of individual fields, such as:
-touched
-dirty
-valid / invalid / pending
-errors
-disabled
-hidden
-readonly - field is not editable but its value is still included in the form value, field is not taken into account when calculating form validity
+touched()
+dirty()
+valid() / invalid() / pending()
+errors() - the errors of the field (if any)
+errorSummary() - the errors of the field and its sub-fields (if any)
+disabled()
+hidden()
+readonly() - field is not editable but its value is still included in the form value, field is not taken into account when calculating form validity
+submitting()
+markAsTouched() / markAsDirty() - to mark the field as touched/dirty
 
   this.userForm.phone().dirty();
 
@@ -250,7 +257,7 @@ readonly - field is not editable but its value is still included in the form val
  */
 
 /*
-4. markAsTouched() - marks a field and all its descendants as touched, instead of only the field itself. This behavior can be overridden by passing { skipDescendants: true } as an argument to the method.
+4. markAsTouched() - marks a field and all its descendants as touched, instead of only the field itself. This behavior can be overridden by passing { skipDescendants: true } as an argument to the method (v22).
  */
 
 /*
