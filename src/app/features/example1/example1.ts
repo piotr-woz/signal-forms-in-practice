@@ -22,10 +22,12 @@ import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import { FormError } from './form-error/form-error';
 
-import { UserProfile } from './user-profile';
-import { userProfileInitialState } from './user-profile';
-import { userProfileSchema } from './user-profile';
-import { numericOnly } from './user-profile';
+import {
+  UserProfile,
+  userProfileInitialState,
+  userProfileSchema,
+  numericOnly,
+} from './user-profile';
 
 @Component({
   selector: 'app-example1',
