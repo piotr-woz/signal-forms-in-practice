@@ -8,64 +8,17 @@ import {
   email,
   submit,
   provideSignalFormsConfig,
-  SchemaPath,
-  validate,
   minDate,
   maxDate,
 } from '@angular/forms/signals';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 
-interface BookingDate {
-  start: Date;
-  end: Date;
-}
-
-interface BookingData {
-  guestName: string;
-  email: string;
-  dateOfBirth: Date;
-  date: BookingDate;
-}
-
-const bookingDataInitialState: BookingData = {
-  guestName: '',
-  email: '',
-  dateOfBirth: getEighteenYearsAgo(),
-  date: {
-    start: new Date(),
-    end: new Date(),
-  },
-};
-/* --------------------------------------------------------------------------- */
-
-// custom validator to ensure the user is at least 18 years old
-function getEighteenYearsAgo(): Date {
-  const date = new Date();
-  date.setFullYear(date.getFullYear() - 18);
-  return date;
-}
-
-// custom validator to ensure start date is before end date
-function startDateMustBeBeforeEndDate(path: SchemaPath<BookingDate>): void {
-  validate(path, (ctx) => {
-    const startDate = ctx.fieldTree.start().value();
-    const endDate = ctx.fieldTree.end().value();
-
-    if (!startDate || !endDate) {
-      return null;
-    }
-
-    const start = new Date(startDate).setHours(0, 0, 0, 0);
-    const end = new Date(endDate).setHours(0, 0, 0, 0);
-
-    return end >= start
-      ? null
-      : {
-          message: 'End date must be the same as or after the start date.',
-          kind: 'invalid_date_range',
-        };
-  });
-}
+import {
+  BookingData,
+  bookingDataInitialState,
+  getEighteenYearsAgo,
+  startDateMustBeBeforeEndDate,
+} from './booking-data';
 
 @Component({
   selector: 'app-example2',
@@ -129,6 +82,7 @@ export default class Example2 {
 
     /* Date range validation with custom validator function */
     // start date must be before end date + both dates must be in the future but before 31.12.2026
+    // start date and end date are required
     startDateMustBeBeforeEndDate(path.date);
     const today = new Date().toLocaleDateString('en-CA');
     minDate(path.date.start, new Date(today));
