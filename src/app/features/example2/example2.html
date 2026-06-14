@@ -15,7 +15,7 @@
         <form (submit)="onSubmit($event)" class="mt-5" autocomplete="off" novalidate>
           <div class="form-control max-w-xs">
             @let gn = bookingForm.guestName;
-            <label class="label">
+            <label class="label flex items-center gap-0.5">
               <span class="label-text">Guest name</span>
               @if (gn().required()) {
               <span class="label-text">*</span>
@@ -35,7 +35,7 @@
 
           <div class="form-control max-w-xs mt-2">
             @let ea = bookingForm.email;
-            <label class="label">
+            <label class="label flex items-center gap-0.5">
               <span class="label-text">Email</span>
               @if (ea().required()) {
               <span class="label-text">*</span>
@@ -55,7 +55,7 @@
 
           <div class="form-control max-w-xs mt-2">
             @let dob = bookingForm.dateOfBirth;
-            <label class="label">
+            <label class="label flex items-center gap-0.5">
               <span class="label-text">Date of birth</span>
               @if (dob().required()) {
               <span class="label-text">*</span>
@@ -75,7 +75,7 @@
 
           <div class="form-control max-w-xs mt-2">
             @let st = bookingForm.date.start;
-            <label class="label">
+            <label class="label flex items-center gap-0.5">
               <span class="label-text">Start date</span>
               @if (st().required()) {
               <span class="label-text">*</span>
@@ -95,7 +95,7 @@
 
           <div class="form-control max-w-xs mt-2">
             @let ed = bookingForm.date.end;
-            <label class="label">
+            <label class="label flex items-center gap-0.5">
               <span class="label-text">End date</span>
               @if (ed().required()) {
               <span class="label-text">*</span>
