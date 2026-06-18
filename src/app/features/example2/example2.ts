@@ -44,14 +44,15 @@ import {
       transition: transform 0.25s ease-in-out;
     }
 
-    .is-invalid {
-      color: #ff5861 !important;
+    input.is-invalid.is-touched {
+      color: #ff5861;
     }
   `,
   providers: [
     provideSignalFormsConfig({
       classes: {
-        'is-invalid': (field) => field.state().invalid() && field.state().touched(),
+        'is-invalid': (field) => field.state().invalid(),
+        'is-touched': (field) => field.state().touched(),
       },
     }),
   ],

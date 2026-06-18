@@ -44,14 +44,15 @@ import {
   ],
   templateUrl: './example1.html',
   styles: `
-    .is-invalid {
-      color: #ba1a1a !important;
+    input.is-invalid.is-touched {
+      color: #ba1a1a;
     }
   `,
   providers: [
     provideSignalFormsConfig({
       classes: {
-        'is-invalid': (field) => field.state().invalid() && field.state().touched(),
+        'is-invalid': (field) => field.state().invalid(),
+        'is-touched': (field) => field.state().touched(),
       },
     }),
   ],
