@@ -93,18 +93,21 @@ export default class Example1 {
         const hasUpper = /[A-Z]/.test(password);
 
         if (!hasNumber) {
-          return { message: 'Password must contain at least one number.', kind: 'password' };
+          return {
+            message: 'Password must contain at least one number.',
+            kind: 'password-with-no-number',
+          };
         }
         if (!hasSpecial) {
           return {
             message: 'Password must contain at least one special character.',
-            kind: 'password',
+            kind: 'password-with-no-special-character',
           };
         }
         if (!hasUpper) {
           return {
             message: 'Password must contain at least one uppercase letter.',
-            kind: 'password',
+            kind: 'password-with-no-uppercase-letter',
           };
         }
 

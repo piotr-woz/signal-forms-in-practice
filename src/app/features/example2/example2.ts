@@ -10,6 +10,7 @@ import {
   provideSignalFormsConfig,
   minDate,
   maxDate,
+  disabled,
 } from '@angular/forms/signals';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 
@@ -80,6 +81,12 @@ export default class Example2 {
     /* Date of birth validation with custom validator function */
     // user must be at least 18 years old
     maxDate(path.dateOfBirth, getEighteenYearsAgo());
+    disabled(path.dateOfBirth, {
+      when: ({ stateOf }) => !stateOf(path.guestName).valid(),
+    });
+    disabled(path.dateOfBirth, {
+      when: ({ stateOf }) => !stateOf(path.email).valid(),
+    });
 
     /* Date range validation with custom validator function */
     // start date must be before end date + both dates must be in the future but before 31.12.2026
