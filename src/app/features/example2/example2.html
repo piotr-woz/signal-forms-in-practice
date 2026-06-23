@@ -107,6 +107,7 @@
   }" (focus)="focused.set({ ...focused(), date: true })" />
           </div>
 
+          <app-rating [formField]="bookingForm.rating" />
 
           <div class="mt-14">
             <button type="submit" [disabled]="bookingForm().invalid() || bookingForm().pending()"

@@ -20,10 +20,11 @@ import {
   getEighteenYearsAgo,
   startDateMustBeBeforeEndDate,
 } from './booking-data';
+import { Rating } from './rating';
 
 @Component({
   selector: 'app-example2',
-  imports: [RouterLink, Header, FormField, JsonPipe, NgTemplateOutlet],
+  imports: [RouterLink, Header, FormField, JsonPipe, NgTemplateOutlet, Rating],
   templateUrl: './example2.html',
   styles: `
     .error-label-box {
@@ -102,7 +103,7 @@ export default class Example2 {
   });
 
   protected readonly lastSubmission = signal<BookingData | null>(null);
-  protected readonly debouncedLastSubmission = debounced(() => this.lastSubmission(), 2000);
+  protected readonly debouncedLastSubmission = debounced(this.lastSubmission, 2000);
 
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();

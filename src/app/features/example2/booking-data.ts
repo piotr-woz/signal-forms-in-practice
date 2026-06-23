@@ -10,6 +10,7 @@ export interface BookingData {
   email: string;
   dateOfBirth: Date;
   date: BookingDate;
+  rating: number | null;
 }
 
 export const bookingDataInitialState: BookingData = {
@@ -20,6 +21,7 @@ export const bookingDataInitialState: BookingData = {
     start: new Date(),
     end: new Date(),
   },
+  rating: null,
 };
 /* --------------------------------------------------------------------------- */
 
