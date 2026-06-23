@@ -41,7 +41,7 @@ export default class Home {
       id: 3,
       title: 'Signal Form 3',
       description: 'Basic implementation with Signal inputs.',
-      origin: 'https://www.angularspace.com/signal-forms/',
+      origin: 'https://www.youtube.com/watch?v=u2Ij-fAyqs4&list=WL&index=3',
     },
   ];
 

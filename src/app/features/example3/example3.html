@@ -4,9 +4,9 @@
   <app-header />
 
   <div class="px-6 pt-26 pb-14">
-    <div class="card relative z-10 max-w-xl mx-auto p-2 border rounded-box border-[#c4c6d0] bg-[#3b5754] shadow-xl">
+    <div class="card relative z-10 max-w-xl mx-auto p-2 border rounded-box border-[#c4c6d0] bg-[#2f4f75] shadow-xl">
       <div class="card-body">
-        <h3 class="card-title text-2xl font-bold leading-relaxed">Example 2: Booking Form</h3>
+        <h3 class="card-title text-2xl font-bold leading-relaxed">Example 3: Booking Form</h3>
         <p class="mb-4 text-[#FF31CE] text-sm">Built-in and Custom Validation with daisyUI: Dates Overview
         </p>
         <p class="mb-4 text-sm">This example demonstrates a booking form with various input fields (especially date
@@ -107,7 +107,7 @@
   }" (focus)="focused.set({ ...focused(), date: true })" />
           </div>
 
-          <app-rating [formField]="bookingForm.rating" />
+          <app-input [formField]="bookingForm.data" />
 
           <div class="mt-14">
             <button type="submit" [disabled]="bookingForm().invalid() || bookingForm().pending()"
