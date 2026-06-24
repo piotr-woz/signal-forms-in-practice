@@ -11,6 +11,7 @@ export interface BookingData {
   dateOfBirth: Date;
   date: BookingDate;
   data: string;
+  agreeToTerms: boolean;
 }
 
 export const bookingDataInitialState: BookingData = {
@@ -22,6 +23,7 @@ export const bookingDataInitialState: BookingData = {
     end: new Date(),
   },
   data: '',
+  agreeToTerms: false,
 };
 /* --------------------------------------------------------------------------- */
 

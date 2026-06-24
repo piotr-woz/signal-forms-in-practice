@@ -21,10 +21,11 @@ import {
   startDateMustBeBeforeEndDate,
 } from './booking-data';
 import { Input } from './input';
+import { Checkbox } from './checkbox';
 
 @Component({
   selector: 'app-example3',
-  imports: [RouterLink, Header, FormField, JsonPipe, NgTemplateOutlet, Input],
+  imports: [RouterLink, Header, FormField, JsonPipe, NgTemplateOutlet, Input, Checkbox],
   templateUrl: './example3.html',
   styles: `
     .error-label-box {

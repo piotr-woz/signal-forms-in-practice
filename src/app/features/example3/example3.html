@@ -108,6 +108,7 @@
           </div>
 
           <app-input [formField]="bookingForm.data" />
+          <app-checkbox [formField]="bookingForm.agreeToTerms">Agree to terms</app-checkbox>
 
           <div class="mt-14">
             <button type="submit" [disabled]="bookingForm().invalid() || bookingForm().pending()"
