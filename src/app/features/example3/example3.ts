@@ -65,6 +65,7 @@ export default class Example3 {
     email: false,
     dateOfBirth: false,
     date: false,
+    data: false,
   };
 
   // track which field is focused to control when to show error messages
@@ -100,6 +101,8 @@ export default class Example3 {
     maxDate(path.date.end, new Date('2026-12-31'));
     required(path.date.start, { message: 'Required' });
     required(path.date.end, { message: 'Required' });
+
+    required(path.data, { message: 'Required' });
   });
 
   protected readonly lastSubmission = signal<BookingData | null>(null);

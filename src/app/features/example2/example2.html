@@ -137,7 +137,7 @@
 <ng-template #formError let-control>
   @if (control().invalid()){
   @for (error of control().errors(); track error.kind) {
-  <div class="label error-label-start" animate.leave="error-label-leave"><span
+  <div class="label error-label-start" animate.leave="error-label-leave" role="alert"><span
       class="label-text-alt text-xs text-error">{{
       error.message
       }}</span></div>
