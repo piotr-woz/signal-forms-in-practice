@@ -100,6 +100,13 @@ export default class Example2 {
     maxDate(path.date.end, new Date('2026-12-31'));
     required(path.date.start, { message: 'Required' });
     required(path.date.end, { message: 'Required' });
+
+    disabled(path.rating, {
+      when: ({ stateOf }) => !stateOf(path.guestName).valid(),
+    });
+    disabled(path.rating, {
+      when: ({ stateOf }) => !stateOf(path.email).valid(),
+    });
   });
 
   protected readonly lastSubmission = signal<BookingData | null>(null);
