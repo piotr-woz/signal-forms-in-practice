@@ -8,21 +8,24 @@ import { FormValueControl } from '@angular/forms/signals';
       @let v = value();
       @for (pickableValue of pickableValues; track pickableValue) {
         <button
-          class="me-2 px-2 py-1 rounded-md cursor-pointer"
+          class="me-1 cursor-pointer"
           [class.selected]="v != null && pickableValue <= v"
           type="button"
           (click)="value.set(pickableValue)"
           [disabled]="disabled()"
           (blur)="touch.emit()"
         >
-          {{ pickableValue }}
+          <span class="material-icons">star</span>
         </button>
       }
     </div>
   `,
   styles: `
     .selected {
-      background-color: #ff31ce;
+      color: #ff31ce;
+    }
+    .material-icons {
+      font-size: 1.2rem;
     }
   `,
 })
@@ -33,5 +36,5 @@ export class Rating implements FormValueControl<number | null> {
   readonly touched = input<boolean>(false);
   readonly touch = output<void>();
 
-  protected readonly pickableValues = [0, 1, 2, 3, 4, 5];
+  protected readonly pickableValues = [1, 2, 3, 4, 5];
 }
