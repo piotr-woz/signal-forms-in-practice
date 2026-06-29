@@ -64,7 +64,7 @@ export default class Example1 {
     /* First name and Last name validation with schema */
     (apply(path.firstName, userProfileSchema),
       apply(path.lastName, userProfileSchema),
-      debounce(path.firstName, 'blur'),
+      debounce(path.firstName, 'blur'), // we can implement debounce() for all form fields: debounce(path, 'blur')
       debounce(path.lastName, 'blur'),
       /* --------------------------------------------------------------------------- */
 
@@ -95,19 +95,19 @@ export default class Example1 {
         if (!hasNumber) {
           return {
             message: 'Password must contain at least one number.',
-            kind: 'password-with-no-number',
+            kind: 'password_with_no_number',
           };
         }
         if (!hasSpecial) {
           return {
             message: 'Password must contain at least one special character.',
-            kind: 'password-with-no-special-character',
+            kind: 'password_with_no_special_character',
           };
         }
         if (!hasUpper) {
           return {
             message: 'Password must contain at least one uppercase letter.',
-            kind: 'password-with-no-uppercase-letter',
+            kind: 'password_with_no_uppercase_letter',
           };
         }
 
@@ -193,6 +193,11 @@ export default class Example1 {
     if (firstError?.fieldTree) {
       firstError.fieldTree().focusBoundControl();
     }
+
+    // const errors = this.userForm().errorSummary();
+    // if (errors.length > 0) {
+    //   errors[0].fieldTree().focusBoundControl();
+    // }
   }
 
   /* With fetch */
@@ -216,12 +221,12 @@ export default class Example1 {
 /* --------------------------------------------------------------------------- */
 /*
 1. Built-in validators include:
-  required(path)
-  min(path, minValue) - for numbers
-  max(path, maxValue)
-  minLength(path, length) - for strings and arrays
-  maxLength(path, length)
-  pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/)
+  required(path) - a signal indicating whether the field is required
+  min(path, minValue) - for numbers, a signal indicating the field's minimum value, if applicable (numeric/date inputs & custom controls)
+  max(path, maxValue) - a signal indicating the field's maximum value, if applicable (numeric/date inputs & custom controls)
+  minLength(path, length) - for strings and arrays, a signal indicating the field's minimum string length, if applicable (<input>, <textarea>, custom controls)
+  maxLength(path, length) - a signal indicating the field's maximum string length, if applicable (<input>, <textarea>, custom controls)
+  pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/), a signal indicating patterns the field must match (array of RegExp)
   email(path)
   minDate(path, minDate) ...for example minDate(path.birthDate, new Date('1900-01-01'))
   maxDate(path, maxDate) ...for example maxDate(path.birthDate, new Date())
@@ -244,18 +249,25 @@ export default class Example1 {
   this.userForm.firstName().value();
 
 3b. We can access the state of individual fields, such as:
-touched()
-dirty()
-valid() / invalid() / pending()
-errors() - the errors of the field (if any)
-errorSummary() - the errors of the field and its sub-fields (if any)
-disabled()
-hidden()
-readonly() - field is not editable but its value is still included in the form value, field is not taken into account when calculating form validity
-submitting()
+touched() - a signal indicating whether the field has been touched by the user
+dirty() - a signal indicating whether field value has been changed by user
+valid() / invalid() / pending() - a signal indicating whether the field is valid or invalid and whether there are any validators still pending for this field
+name() -	a signal containing the field's unique name, typically based on its parent field name
+value() -	a writable signal containing the field’s value; updates sync with the bound data model
+
+errors() - a signal containing the current errors for the field (if any)
+errorSummary() - a signal containing the errors of the field and its descendants - sub-fields (if any)
+disabled() - a signal indicating whether the field is currently disabled
+disabledReasons() - a signal containing the reasons why the field is currently disabled
+hidden() - a signal indicating whether a field is hidden
+readonly() - a signal indicating whether the field is currently readonly - field is not editable but its value is still included in the form value, field is not taken into account when calculating form validity
+submitting() - a signal indicating whether the field is currently in the process of being submitted
 markAsTouched() / markAsDirty() - to mark the field as touched/dirty
 
-  this.userForm.phone().dirty();
+Based on the logic we have defined using the Schema and the state derived from user actions (touched, dirty), we get the FieldState for every node in the FieldTree. To retrieve the FieldState, navigate to a node in the FieldTree and invoke it as a function.
+
+  this.userForm.phone(); - returns the `FieldState` object for the `phone` field
+  this.userForm.phone().dirty(); - reads the value of the `dirty` signal
 
 3c. And we can also acccess that information on the entire form
   this.userForm().value(); // returns the entire form value

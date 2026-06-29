@@ -30,6 +30,10 @@ export const userProfileSchema: Schema<string> = schema<string>((path: SchemaPat
   });
 });
 
+// In the Schema we declaretively define the logic of our form.
+// You can think the Schema as a function that accepts a SchemaPath and defines the logic for it.
+// SchemaPath is an object that represents a location in the FieldTree structure. It is used within a Schema to bind logic (such as validation or disabled rules) to that location.
+
 // custom validator to allow only numeric input
 export function numericOnly(
   path: SchemaPath<string>,

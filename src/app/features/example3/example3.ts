@@ -11,6 +11,7 @@ import {
   minDate,
   maxDate,
   disabled,
+  validate,
 } from '@angular/forms/signals';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 
@@ -78,6 +79,20 @@ export default class Example3 {
     /* Guest name and Email validation */
     // guest name is required + email is required and must be a valid email address
     required(path.guestName, { message: 'Required' });
+
+    // NEW VALIDATOR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    const allowedNames = ['Piotr', 'Agnieszka', 'Julia'];
+    validate(path.guestName, ({ value }) => {
+      const name = value();
+
+      return allowedNames.includes(name)
+        ? null
+        : {
+            message: 'Name do not match. Allowed names: Piotr, Agnieszka, Julia.',
+            kind: 'not_proper_name',
+          };
+    });
+
     required(path.email, { message: 'Required' });
     email(path.email, { message: 'Invalid email' });
 
