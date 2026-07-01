@@ -12,6 +12,7 @@ import {
   maxDate,
   disabled,
   validate,
+  schema,
 } from '@angular/forms/signals';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 
@@ -75,51 +76,54 @@ export default class Example3 {
 
   private readonly bookingModel = signal<BookingData>(bookingDataInitialState);
 
-  protected readonly bookingForm = form(this.bookingModel, (path) => {
-    /* Guest name and Email validation */
-    // guest name is required + email is required and must be a valid email address
-    required(path.guestName, { message: 'Required' });
+  protected readonly bookingForm = form(
+    this.bookingModel,
+    schema<BookingData>((path) => {
+      /* Guest name and Email validation */
+      // guest name is required + email is required and must be a valid email address
+      required(path.guestName, { message: 'Required' });
 
-    // NEW VALIDATOR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    const allowedNames = ['Piotr', 'Agnieszka', 'Julia'];
-    validate(path.guestName, ({ value }) => {
-      const name = value();
+      // NEW VALIDATOR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      const allowedNames = ['Piotr', 'Agnieszka', 'Julia'];
+      validate(path.guestName, ({ value }) => {
+        const name = value();
 
-      return allowedNames.includes(name)
-        ? null
-        : {
-            message: 'Name do not match. Allowed names: Piotr, Agnieszka, Julia.',
-            kind: 'not_proper_name',
-          };
-    });
+        return allowedNames.includes(name)
+          ? null
+          : {
+              message: 'Name do not match. Allowed names: Piotr, Agnieszka, Julia.',
+              kind: 'not_proper_name',
+            };
+      });
 
-    required(path.email, { message: 'Required' });
-    email(path.email, { message: 'Invalid email' });
+      required(path.email, { message: 'Required' });
+      email(path.email, { message: 'Invalid email' });
 
-    /* Date of birth validation with custom validator function */
-    // user must be at least 18 years old
-    maxDate(path.dateOfBirth, getEighteenYearsAgo());
-    disabled(path.dateOfBirth, {
-      when: ({ stateOf }) => !stateOf(path.guestName).valid(),
-    });
-    disabled(path.dateOfBirth, {
-      when: ({ stateOf }) => !stateOf(path.email).valid(),
-    });
+      /* Date of birth validation with custom validator function */
+      // user must be at least 18 years old
+      maxDate(path.dateOfBirth, getEighteenYearsAgo());
+      disabled(path.dateOfBirth, {
+        when: ({ stateOf }) => !stateOf(path.guestName).valid(),
+      });
+      disabled(path.dateOfBirth, {
+        when: ({ stateOf }) => !stateOf(path.email).valid(),
+      });
 
-    /* Date range validation with custom validator function */
-    // start date must be before end date + both dates must be in the future but before 31.12.2026
-    // start date and end date are required
-    startDateMustBeBeforeEndDate(path.date);
-    const today = new Date().toLocaleDateString('en-CA');
-    minDate(path.date.start, new Date(today));
-    maxDate(path.date.start, new Date('2026-12-31'));
-    minDate(path.date.end, new Date(today));
-    maxDate(path.date.end, new Date('2026-12-31'));
-    required(path.date.start, { message: 'Required' });
-    required(path.date.end, { message: 'Required' });
+      /* Date range validation with custom validator function */
+      // start date must be before end date + both dates must be in the future but before 31.12.2026
+      // start date and end date are required
+      startDateMustBeBeforeEndDate(path.date);
+      const today = new Date().toLocaleDateString('en-CA');
+      minDate(path.date.start, new Date(today));
+      maxDate(path.date.start, new Date('2026-12-31'));
+      minDate(path.date.end, new Date(today));
+      maxDate(path.date.end, new Date('2026-12-31'));
+      required(path.date.start, { message: 'Required' });
+      required(path.date.end, { message: 'Required' });
 
-    required(path.data, { message: 'Required' });
-  });
+      required(path.data, { message: 'Required' });
+    }),
+  );
 
   protected readonly lastSubmission = signal<BookingData | null>(null);
   protected readonly debouncedLastSubmission = debounced(this.lastSubmission, 2000);

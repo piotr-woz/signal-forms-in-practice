@@ -12,6 +12,7 @@ import {
   hidden,
   provideSignalFormsConfig,
   debounce,
+  schema,
 } from '@angular/forms/signals';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -60,96 +61,101 @@ import {
 export default class Example1 {
   private readonly userModel = signal<UserProfile>(userProfileInitialState);
 
-  protected readonly userForm = form(this.userModel, (path) => {
-    /* First name and Last name validation with schema */
-    (apply(path.firstName, userProfileSchema),
-      apply(path.lastName, userProfileSchema),
-      debounce(path.firstName, 'blur'), // we can implement debounce() for all form fields: debounce(path, 'blur')
-      debounce(path.lastName, 'blur'),
-      /* --------------------------------------------------------------------------- */
+  protected readonly userForm = form(
+    this.userModel,
+    schema<UserProfile>((path) => {
+      /* First name and Last name validation with schema */
+      (apply(path.firstName, userProfileSchema),
+        apply(path.lastName, userProfileSchema),
+        debounce(path.firstName, 'blur'), // we can implement debounce() for all form fields: debounce(path, 'blur')
+        debounce(path.lastName, 'blur'),
+        /* --------------------------------------------------------------------------- */
 
-      /* Phone validation with custom validator function */
-      // phone number must contain only numbers
-      numericOnly(path.phone, 'phone', { message: 'The phone number must contain only numbers.' }),
-      /* --------------------------------------------------------------------------- */
+        /* Phone validation with custom validator function */
+        // phone number must contain only numbers
+        numericOnly(path.phone, 'phone', {
+          message: 'The phone number must contain only numbers.',
+        }),
+        /* --------------------------------------------------------------------------- */
 
-      /* Email validation */
-      // email is required only if email marketing is checked
-      required(path.email, {
-        when: ({ valueOf }) => valueOf(path.emailMarketing),
-        message: 'This is a required field.',
-      }),
-      email(path.email, { message: 'The email address is not valid.' }),
-      /* --------------------------------------------------------------------------- */
+        /* Email validation */
+        // email is required only if email marketing is checked
+        required(path.email, {
+          when: ({ valueOf }) => valueOf(path.emailMarketing),
+          message: 'This is a required field.',
+        }),
+        email(path.email, { message: 'The email address is not valid.' }),
+        /* --------------------------------------------------------------------------- */
 
-      /* Password validation */
-      // password must contain at least one number, one special character and one uppercase letter (custom validator)
-      validate(path.password, ({ value }): { message: string; kind: string } | null => {
-        const password = value();
-        if (!password) return null;
+        /* Password validation */
+        // password must contain at least one number, one special character and one uppercase letter (custom validator)
+        validate(path.password, ({ value }): { message: string; kind: string } | null => {
+          const password = value();
+          if (!password) return null;
 
-        const hasNumber = /\d/.test(password);
-        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-        const hasUpper = /[A-Z]/.test(password);
+          const hasNumber = /\d/.test(password);
+          const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+          const hasUpper = /[A-Z]/.test(password);
 
-        if (!hasNumber) {
-          return {
-            message: 'Password must contain at least one number.',
-            kind: 'password_with_no_number',
-          };
-        }
-        if (!hasSpecial) {
-          return {
-            message: 'Password must contain at least one special character.',
-            kind: 'password_with_no_special_character',
-          };
-        }
-        if (!hasUpper) {
-          return {
-            message: 'Password must contain at least one uppercase letter.',
-            kind: 'password_with_no_uppercase_letter',
-          };
-        }
+          if (!hasNumber) {
+            return {
+              message: 'Password must contain at least one number.',
+              kind: 'password_with_no_number',
+            };
+          }
+          if (!hasSpecial) {
+            return {
+              message: 'Password must contain at least one special character.',
+              kind: 'password_with_no_special_character',
+            };
+          }
+          if (!hasUpper) {
+            return {
+              message: 'Password must contain at least one uppercase letter.',
+              kind: 'password_with_no_uppercase_letter',
+            };
+          }
 
-        return null;
-      }),
-      // password must be at least 8 characters long
-      minLength(path.password, 8, {
-        message: (password) =>
-          `Password should have at least 8 characters but has only ${password.value().length}`,
-      }),
-      /* --------------------------------------------------------------------------- */
+          return null;
+        }),
+        // password must be at least 8 characters long
+        minLength(path.password, 8, {
+          message: (password) =>
+            `Password should have at least 8 characters but has only ${password.value().length}`,
+        }),
+        /* --------------------------------------------------------------------------- */
 
-      /* Confirm password validation */
-      // confirm password field is hidden if password is empty
-      hidden(path.confirmPassword, { when: ({ valueOf }) => valueOf(path.password) === '' }),
-      // confirm password must match password (custom validator)
-      validate(
-        path.confirmPassword,
-        ({ value, valueOf }): { message: string; kind: string } | null => {
-          return value() === valueOf(path.password)
-            ? null
-            : { message: 'Passwords do not match.', kind: 'confirmPassword' };
-        },
-      ));
+        /* Confirm password validation */
+        // confirm password field is hidden if password is empty
+        hidden(path.confirmPassword, { when: ({ valueOf }) => valueOf(path.password) === '' }),
+        // confirm password must match password (custom validator)
+        validate(
+          path.confirmPassword,
+          ({ value, valueOf }): { message: string; kind: string } | null => {
+            return value() === valueOf(path.password)
+              ? null
+              : { message: 'Passwords do not match.', kind: 'confirmPassword' };
+          },
+        ));
 
-    // validateTree(path, ({ value, fieldTreeOf }) => {
-    //   return value().confirmPassword === value().password
-    //     ? null
-    //     : [
-    //         {
-    //           message: 'Passwords do not match.',
-    //           kind: 'confirmPassword',
-    //           fieldTree: fieldTreeOf(path.confirmPassword),
-    //         },
-    //         {
-    //           message: 'Passwords do not match.',
-    //           kind: 'confirmPassword',
-    //           fieldTree: fieldTreeOf(path.password),
-    //         },
-    //       ];
-    // })
-  });
+      // validateTree(path, ({ value, fieldTreeOf }) => {
+      //   return value().confirmPassword === value().password
+      //     ? null
+      //     : [
+      //         {
+      //           message: 'Passwords do not match.',
+      //           kind: 'confirmPassword',
+      //           fieldTree: fieldTreeOf(path.confirmPassword),
+      //         },
+      //         {
+      //           message: 'Passwords do not match.',
+      //           kind: 'confirmPassword',
+      //           fieldTree: fieldTreeOf(path.password),
+      //         },
+      //       ];
+      // })
+    }),
+  );
 
   constructor() {
     // this.userForm.firstName().value.set('Peter');
@@ -221,12 +227,12 @@ export default class Example1 {
 /* --------------------------------------------------------------------------- */
 /*
 1. Built-in validators include:
-  required(path) - a signal indicating whether the field is required
-  min(path, minValue) - for numbers, a signal indicating the field's minimum value, if applicable (numeric/date inputs & custom controls)
-  max(path, maxValue) - a signal indicating the field's maximum value, if applicable (numeric/date inputs & custom controls)
-  minLength(path, length) - for strings and arrays, a signal indicating the field's minimum string length, if applicable (<input>, <textarea>, custom controls)
-  maxLength(path, length) - a signal indicating the field's maximum string length, if applicable (<input>, <textarea>, custom controls)
-  pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/), a signal indicating patterns the field must match (array of RegExp)
+  required(path) - indicates whether the field is required (logic binding function - binds a validator that checks if the field has a non-empty value)
+  min(path, minValue) - for numbers, indicates the field's minimum value, if applicable (numeric/date inputs & custom controls)
+  max(path, maxValue) - indicates the field's maximum value, if applicable (numeric/date inputs & custom controls)
+  minLength(path, length) - for strings and arrays, indicates the field's minimum string length, if applicable (<input>, <textarea>, custom controls)
+  maxLength(path, length) - indicates the field's maximum string length, if applicable (<input>, <textarea>, custom controls)
+  pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/), indicates patterns the field must match (array of RegExp)
   email(path)
   minDate(path, minDate) ...for example minDate(path.birthDate, new Date('1900-01-01'))
   maxDate(path, maxDate) ...for example maxDate(path.birthDate, new Date())
@@ -298,4 +304,14 @@ There are now three variations of debouncing in Angular:
     - you can debounce a form field value on input with: debounce(field, delay)
     - you can debounce an asynchronous validator with: validateHttp(field, { debounce: delay })
     - or you can debounce any signal value with: debounced(signal, delay)
+ */
+
+/*
+Angular Signal Forms give us the tools to build complex validation and logic rules by composing smaller, reusable schema blocks.
+These tools are the following functions:
+
+apply() -	apply a schema to a specific path
+applyWhen() -	conditionally apply a schema
+applyWhenValue() -	apply a schema when the value matches a condition
+applyEach()	- apply a schema to every item in an array or object
  */
